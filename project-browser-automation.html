@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Browser Automation 3.0 - Rushi Daulatkar</title>
+    <meta
+      name="description"
+      content="Cross-platform Python automation tool for intelligent search automation with trending topics integration"
+    />
+    <style>
+      /* RESET & BASE STYLES */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      /* ROOT VARIABLES FOR THEMING */
+      :root {
+        --bg-primary: #ffffff;
+        --bg-secondary: #fafafa;
+        --bg-tertiary: #f5f5f5;
+        --bg-placeholder: #f9f9f9;
+        --text-primary: #000000;
+        --text-secondary: #666666;
+        --border-primary: #000000;
+        --border-secondary: #cccccc;
+        --border-tertiary: #dddddd;
+        --link-color: #0066cc;
+        --link-hover: #003d7a;
+        --shadow-color: rgba(0, 0, 0, 0.1);
+      }
+
+      /* DARK MODE VARIABLES */
+      [data-theme="dark"] {
+        --bg-primary: #1a1a1a;
+        --bg-secondary: #2d2d2d;
+        --bg-tertiary: #383838;
+        --bg-placeholder: #2a2a2a;
+        --text-primary: #e0e0e0;
+        --text-secondary: #a0a0a0;
+        --border-primary: #ffffff;
+        --border-secondary: #404040;
+        --border-tertiary: #505050;
+        --link-color: #66b3ff;
+        --link-hover: #99ccff;
+        --shadow-color: rgba(255, 255, 255, 0.1);
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        padding-top: 60px;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      /* NAVIGATION BAR */
+      .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: var(--bg-primary);
+        border-bottom: 2px solid var(--border-primary);
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+        box-shadow: 0 2px 4px var(--shadow-color);
+      }
+
+      .navbar a {
+        color: var(--text-primary);
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 18px;
+        transition: color 0.3s ease;
+      }
+
+      .navbar a:hover {
+        color: var(--link-color);
+      }
+
+      #themeToggle {
+        padding: 8px 14px;
+        background: var(--bg-primary);
+        border: 2px solid var(--border-primary);
+        cursor: pointer;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+      }
+
+      #themeToggle:hover {
+        background: var(--border-primary);
+        color: var(--bg-primary);
+        transform: translateY(-2px);
+      }
+
+      /* MAIN CONTENT */
+      .content {
+        padding: 20px;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      /* CONTAINER BOXES */
+      .container {
+        border: 1px solid var(--border-secondary);
+        padding: 20px;
+        margin: 20px 0;
+        background: var(--bg-primary);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease, transform 0.6s ease,
+          background-color 0.3s ease, border-color 0.3s ease,
+          box-shadow 0.3s ease;
+        box-shadow: 0 2px 4px var(--shadow-color);
+      }
+
+      .container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px var(--shadow-color);
+      }
+
+      .container.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .container.visible:hover {
+        transform: translateY(-5px);
+      }
+
+      /* HEADER */
+      .page-header {
+        border: 2px solid var(--border-primary);
+        padding: 20px;
+        margin-bottom: 30px;
+        background: var(--bg-primary);
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px var(--shadow-color);
+      }
+
+      .page-header:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px var(--shadow-color);
+      }
+
+      .page-header h1 {
+        font-size: 28px;
+        margin-bottom: 10px;
+        color: var(--text-primary);
+      }
+
+      .back-link {
+        display: inline-block;
+        padding: 8px 16px;
+        border: 1px solid var(--border-primary);
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .back-link:hover {
+        background: var(--border-primary);
+        color: var(--bg-primary);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px var(--shadow-color);
+        text-decoration: none;
+      }
+
+      /* SECTION HEADINGS */
+      h2 {
+        font-size: 22px;
+        margin-bottom: 15px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid var(--border-primary);
+        color: var(--text-primary);
+      }
+
+      h3 {
+        font-size: 18px;
+        margin: 15px 0 10px 0;
+        color: var(--text-primary);
+      }
+
+      /* LINKS */
+      a {
+        color: var(--link-color);
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      a:hover {
+        color: var(--link-hover);
+        text-decoration: underline;
+      }
+
+      /* LISTS */
+      ul {
+        margin-left: 20px;
+        margin-top: 10px;
+      }
+
+      li {
+        margin: 8px 0;
+        color: var(--text-primary);
+      }
+
+      /* SUBSECTIONS */
+      .subsection {
+        border: 1px solid var(--border-tertiary);
+        padding: 15px;
+        margin: 15px 0;
+        background: var(--bg-secondary);
+        transition: all 0.3s ease;
+        box-shadow: 0 1px 3px var(--shadow-color);
+      }
+
+      .subsection:hover {
+        transform: translateX(5px);
+        box-shadow: 0 4px 8px var(--shadow-color);
+      }
+
+      .subsection strong {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--text-primary);
+      }
+
+      /* IMAGE PLACEHOLDERS */
+      .image-placeholder {
+        border: 2px dashed var(--border-secondary);
+        padding: 40px;
+        margin: 20px 0;
+        text-align: center;
+        background: var(--bg-placeholder);
+        color: var(--text-secondary);
+        transition: all 0.3s ease;
+      }
+
+      .image-placeholder:hover {
+        border-color: var(--border-primary);
+        transform: scale(1.02);
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        border: 1px solid var(--border-secondary);
+        margin: 20px 0;
+        transition: all 0.3s ease;
+      }
+
+      img:hover {
+        transform: scale(1.02);
+        box-shadow: 0 8px 16px var(--shadow-color);
+      }
+
+      .image-caption {
+        font-style: italic;
+        margin-top: 5px;
+        color: var(--text-secondary);
+      }
+
+      /* PROJECT INFO BOX */
+      .info-box {
+        border: 2px solid var(--border-primary);
+        padding: 15px;
+        margin: 20px 0;
+        background: var(--bg-tertiary);
+        transition: all 0.3s ease;
+      }
+
+      .info-box p {
+        margin: 5px 0;
+        color: var(--text-primary);
+      }
+
+      /* CHALLENGE BOXES */
+      .challenge-box {
+        border-left: 4px solid var(--border-primary);
+        padding: 15px;
+        margin: 20px 0;
+        background: var(--bg-secondary);
+        transition: all 0.3s ease;
+        box-shadow: 0 1px 3px var(--shadow-color);
+      }
+
+      .challenge-box:hover {
+        transform: translateX(5px);
+        box-shadow: 0 4px 8px var(--shadow-color);
+      }
+
+      /* LINKS SECTION */
+      .links-section {
+        border: 2px solid var(--border-primary);
+        padding: 20px;
+        margin: 30px 0;
+        text-align: center;
+        background: var(--bg-primary);
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px var(--shadow-color);
+      }
+
+      .links-section:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px var(--shadow-color);
+      }
+
+      .links-section a {
+        display: inline-block;
+        margin: 5px 10px;
+        padding: 10px 20px;
+        border: 1px solid var(--border-primary);
+        background: var(--border-primary);
+        color: var(--bg-primary);
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .links-section a:hover {
+        background: var(--bg-primary);
+        color: var(--border-primary);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px var(--shadow-color);
+      }
+
+      /* GO TO TOP BUTTON */
+      #goTopBtn {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        display: none;
+        padding: 12px 18px;
+        background: var(--border-primary);
+        color: var(--bg-primary);
+        border: 2px solid var(--border-primary);
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 8px var(--shadow-color);
+        z-index: 999;
+      }
+
+      #goTopBtn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px var(--shadow-color);
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 600px) {
+        body {
+          padding-top: 60px;
+        }
+
+        .content {
+          padding: 10px;
+        }
+
+        .container {
+          padding: 15px;
+        }
+
+        #themeToggle {
+          padding: 6px 10px;
+          font-size: 16px;
+        }
+
+        .navbar {
+          padding: 12px 15px;
+        }
+
+        .navbar a {
+          font-size: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAVIGATION BAR -->
+    <nav class="navbar">
+      <a href="index.html">Home</a>
+      <button
+        id="themeToggle"
+        onclick="toggleTheme()"
+        aria-label="Toggle dark mode"
+      >
+        <span id="themeIcon">🌙</span>
+      </button>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="content">
+      <!-- PAGE HEADER -->
+      <div class="page-header">
+        <h1>Browser Automation 3.0</h1>
+        <p><a href="index.html" class="back-link">← Back to Portfolio</a></p>
+      </div>
+
+      <!-- PROJECT OVERVIEW -->
+      <section class="container">
+        <div class="info-box">
+          <p><strong>Duration:</strong> Oct 2024 – Dec 2024</p>
+          <p>
+            <strong>Technologies:</strong> Python, Selenium WebDriver,
+            HTML/CSS/JavaScript, GitHub Pages
+          </p>
+          <p>
+            <strong>Category:</strong> Automation, Web Scraping, Cross-Platform
+            Development
+          </p>
+        </div>
+      </section>
+
+      <!-- DESCRIPTION -->
+      <section class="container">
+        <h2>Description</h2>
+        <p>
+          Browser Automation 3.0 is a sophisticated cross-platform Python
+          automation tool designed to automatically earn Microsoft Rewards
+          points through intelligent search automation. The project features an
+          interactive GitHub Pages website that provides comprehensive setup
+          guides, making installation seamless across Windows and Parrot OS
+          (Linux) environments.
+        </p>
+        <p style="margin-top: 15px">
+          The tool leverages Selenium WebDriver for browser automation and
+          integrates with trending topics APIs to perform realistic searches,
+          mimicking human behavior to maintain account safety. The accompanying
+          website features step-by-step instructions, command-line snippets with
+          copy-paste functionality, and visual guides for easy deployment.
+        </p>
+      </section>
+
+      <!-- KEY ACHIEVEMENTS -->
+      <section class="container">
+        <h2>Key Features & Achievements</h2>
+        <ul>
+          <li>
+            <strong>Cross-Platform Compatibility:</strong> Seamlessly runs on
+            Windows and Parrot OS (Linux) with environment-specific
+            configurations
+          </li>
+          <li>
+            <strong>Intelligent Search Automation:</strong> Automated Bing
+            searches using trending topics API for realistic search patterns
+          </li>
+          <li>
+            <strong>Interactive Setup Website:</strong> Built comprehensive
+            GitHub Pages documentation with visual guides and copy-paste
+            commands
+          </li>
+          <li>
+            <strong>Customizable Parameters:</strong> Configurable search counts
+            (1-20 searches per session) and timing intervals
+          </li>
+          <li>
+            <strong>Selenium WebDriver Integration:</strong> Robust browser
+            automation with error handling and anti-detection measures
+          </li>
+          <li>
+            <strong>User-Friendly Interface:</strong> Command-line interface
+            with clear prompts and progress indicators
+          </li>
+          <li>
+            <strong>API Integration:</strong> Trending topics fetched from
+            external APIs for varied and relevant search queries
+          </li>
+          <li>
+            <strong>Safety Features:</strong> Random delays and human-like
+            behavior patterns to avoid detection
+          </li>
+        </ul>
+      </section>
+
+      <!-- IMAGE PLACEHOLDER 1
+      <div class="image-placeholder">
+        <strong>📷 IMAGE PLACEHOLDER 1</strong><br />
+        ADD IMAGE: images/browser-automation-website.jpg<br />
+        Screenshot of the GitHub Pages setup website<br />
+        Show: Homepage with setup instructions and navigation<br />
+        Recommended size: 1920x1080px
+      </div>
+      -->
+      <figure>
+        <img
+          src="images/browser-automation-website.png"
+          alt="Browser Automation 3.0 GitHub Pages website showing setup instructions"
+          loading="lazy"
+        />
+        <figcaption class="image-caption">
+          Browser Automation 3.0 documentation website hosted on GitHub Pages
+        </figcaption>
+      </figure>
+
+      <!-- TECHNICAL ARCHITECTURE -->
+      <section class="container">
+        <h2>Technical Architecture</h2>
+
+        <div class="subsection">
+          <strong>Automation Core</strong>
+          <ul>
+            <li>
+              Python 3.x with Selenium WebDriver for browser control and
+              automation
+            </li>
+            <li>ChromeDriver/GeckoDriver for browser compatibility</li>
+            <li>Multi-threaded execution for efficient processing</li>
+            <li>Error handling and recovery mechanisms</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>API Integration Layer</strong>
+          <ul>
+            <li>Trending topics API for dynamic search query generation</li>
+            <li>RESTful API calls with JSON parsing</li>
+            <li>Fallback mechanisms for API unavailability</li>
+            <li>Rate limiting to prevent API throttling</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>Documentation Website</strong>
+          <ul>
+            <li>Static HTML/CSS/JavaScript hosted on GitHub Pages</li>
+            <li>Responsive design for mobile and desktop viewing</li>
+            <li>
+              Interactive code snippets with copy-to-clipboard functionality
+            </li>
+            <li>Step-by-step visual guides with screenshots</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- IMAGE PLACEHOLDER 2 
+      <div class="image-placeholder">
+        <strong>📷 IMAGE PLACEHOLDER 2</strong><br />
+        ADD IMAGE: images/browser-automation-terminal.jpg<br />
+        Screenshot of the automation tool running in terminal<br />
+        Show: Command-line output with search progress<br />
+        Recommended size: 1920x1080px
+      </div>
+    -->
+      <figure>
+        <img
+          src="images/browser-automation-terminal.png"
+          alt="Browser automation tool running in terminal with search progress output"
+          loading="lazy"
+        />
+        <figcaption class="image-caption">
+          Automation tool running in terminal showing real-time search progress
+        </figcaption>
+      </figure>
+
+      <!-- HOW IT WORKS -->
+      <section class="container">
+        <h2>How It Works</h2>
+
+        <div class="subsection">
+          <strong>Step 1: Environment Setup</strong>
+          <ul>
+            <li>User downloads the project from GitHub repository</li>
+            <li>
+              Installs Python dependencies using pip (selenium, requests, etc.)
+            </li>
+            <li>Downloads appropriate WebDriver for their browser</li>
+            <li>Configures environment variables and paths</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>Step 2: Configuration</strong>
+          <ul>
+            <li>User sets search count preferences (1-20 searches)</li>
+            <li>Configures Microsoft account credentials (optional)</li>
+            <li>Sets timing intervals between searches</li>
+            <li>Customizes browser preferences (headless mode, window size)</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>Step 3: Execution</strong>
+          <ul>
+            <li>Script fetches trending topics from API</li>
+            <li>Initializes browser session with Selenium WebDriver</li>
+            <li>Navigates to Bing and performs automated searches</li>
+            <li>Implements random delays to mimic human behavior</li>
+            <li>Tracks progress and displays results in real-time</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>Step 4: Completion</strong>
+          <ul>
+            <li>Script completes specified number of searches</li>
+            <li>Generates summary report of actions taken</li>
+            <li>Closes browser session gracefully</li>
+            <li>Logs session details for future reference</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- IMAGE PLACEHOLDER 3
+      <div class="image-placeholder">
+        <strong>📷 IMAGE PLACEHOLDER 3</strong><br />
+        ADD IMAGE: images/browser-automation-code.jpg<br />
+        Screenshot of Python code showing key functions<br />
+        Show: Code snippets with Selenium automation logic<br />
+        Recommended size: 1200x800px
+      </div>
+      -->
+      <figure>
+        <img
+          src="images/browser-automation-code.png"
+          alt="Python Selenium automation code showing browser control logic"
+          loading="lazy"
+        />
+        <figcaption class="image-caption">
+          Core Python Selenium automation logic for intelligent search execution
+        </figcaption>
+      </figure>
+
+      <!-- TECHNICAL CHALLENGES -->
+      <section class="container">
+        <h2>Technical Challenges & Solutions</h2>
+
+        <div class="challenge-box">
+          <strong>Challenge 1: Cross-Platform Compatibility</strong>
+          <p>
+            Different operating systems have varying file paths, command
+            syntaxes, and WebDriver configurations. Windows uses backslashes for
+            paths while Linux uses forward slashes, and driver executables have
+            different extensions (.exe vs no extension).
+          </p>
+          <p style="margin-top: 10px">
+            <strong>Solution:</strong> Implemented platform detection using
+            Python's `platform` module to automatically adjust file paths,
+            driver names, and commands based on the detected OS. Created
+            separate installation scripts for Windows (batch) and Linux (shell)
+            with OS-specific instructions in the documentation website.
+          </p>
+        </div>
+
+        <div class="challenge-box">
+          <strong>Challenge 2: Avoiding Detection</strong>
+          <p>
+            Automated browsers are often detected by websites through various
+            fingerprinting techniques, including WebDriver flags, consistent
+            timing patterns, and missing browser extensions. Microsoft Rewards
+            has detection mechanisms to prevent automation abuse.
+          </p>
+          <p style="margin-top: 10px">
+            <strong>Solution:</strong> Implemented multiple anti-detection
+            techniques including randomized delays between actions (2-8
+            seconds), human-like mouse movements, varied search queries using
+            real trending topics, and browser profile customization to remove
+            automation indicators. Added user-agent rotation and cookie
+            management.
+          </p>
+        </div>
+
+        <div class="challenge-box">
+          <strong>Challenge 3: API Reliability and Fallbacks</strong>
+          <p>
+            Trending topics APIs can be rate-limited, experience downtime, or
+            return incomplete data. Without proper fallback mechanisms, the
+            automation would fail if the API is unavailable.
+          </p>
+          <p style="margin-top: 10px">
+            <strong>Solution:</strong> Implemented a multi-tiered fallback
+            system with three levels: primary API, secondary backup API, and
+            local fallback list of generic search terms. Added retry logic with
+            exponential backoff for API requests and caching of successful API
+            responses for temporary offline usage.
+          </p>
+        </div>
+      </section>
+
+      <!-- IMAGE PLACEHOLDER 4 
+      <div class="image-placeholder">
+        <strong>📷 IMAGE PLACEHOLDER 4</strong><br />
+        ADD IMAGE: images/browser-automation-setup-guide.jpg<br />
+        Screenshot of setup guide from GitHub Pages<br />
+        Show: Step-by-step installation instructions with commands<br />
+        Recommended size: 1920x1080px
+      </div>
+      -->
+      <figure>
+        <img
+          src="images/browser-automation-setup-guide.png"
+          alt="Browser Automation 3.0 setup guide with step-by-step installation instructions"
+          loading="lazy"
+        />
+        <figcaption class="image-caption">
+          Step-by-step setup guide with installation commands and configuration
+        </figcaption>
+      </figure>
+
+      <!-- REAL-WORLD IMPACT -->
+      <section class="container">
+        <h2>Real-World Impact & Use Cases</h2>
+        <ul>
+          <li>
+            <strong>Time Savings:</strong> Automates repetitive daily search
+            tasks, saving 10-15 minutes per day for users
+          </li>
+          <li>
+            <strong>Microsoft Rewards:</strong> Helps users earn rewards points
+            passively for gift cards and subscriptions
+          </li>
+          <li>
+            <strong>Learning Tool:</strong> Demonstrates practical web
+            automation techniques for educational purposes
+          </li>
+          <li>
+            <strong>Cross-Platform Development:</strong> Showcases skills in
+            building tools that work across different operating systems
+          </li>
+          <li>
+            <strong>Documentation Best Practices:</strong> Sets standard for
+            clear, user-friendly technical documentation
+          </li>
+          <li>
+            <strong>API Integration:</strong> Practical example of combining
+            multiple APIs in a single application
+          </li>
+        </ul>
+      </section>
+
+      <!-- TECHNICAL IMPLEMENTATION -->
+      <section class="container">
+        <h2>Technical Implementation Details</h2>
+
+        <div class="subsection">
+          <strong>Python & Selenium</strong>
+          <ul>
+            <li>
+              Selenium WebDriver for browser automation and element interaction
+            </li>
+            <li>
+              WebDriverWait for explicit waits and synchronization with page
+              loads
+            </li>
+            <li>Exception handling for robust error recovery</li>
+            <li>
+              Browser options configuration for headless and stealth modes
+            </li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>API Integration</strong>
+          <ul>
+            <li>
+              Requests library for HTTP calls to trending topics APIs (Google
+              Trends, Twitter API)
+            </li>
+            <li>JSON parsing for extracting relevant search terms</li>
+            <li>Error handling for network failures and rate limiting</li>
+            <li>Response validation and data sanitization</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>GitHub Pages Website</strong>
+          <ul>
+            <li>Static HTML/CSS with vanilla JavaScript for interactivity</li>
+            <li>Responsive CSS grid and flexbox layouts</li>
+            <li>
+              Clipboard API integration for copy-paste command functionality
+            </li>
+            <li>Markdown-style syntax highlighting for code blocks</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>Safety & Anti-Detection</strong>
+          <ul>
+            <li>
+              Random sleep intervals using Python's random module (2-8 seconds)
+            </li>
+            <li>User-agent spoofing with rotating browser profiles</li>
+            <li>Browser automation flag removal from WebDriver</li>
+            <li>Session management with cookie persistence</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- TECHNOLOGIES USED -->
+      <section class="container">
+        <h2>Technologies & Tools Used</h2>
+        <ul>
+          <li><strong>Core Language:</strong> Python 3.x</li>
+          <li>
+            <strong>Automation Framework:</strong> Selenium WebDriver 4.x with
+            ChromeDriver
+          </li>
+          <li>
+            <strong>API Integration:</strong> Requests library for RESTful API
+            calls
+          </li>
+          <li>
+            <strong>Frontend:</strong> HTML5, CSS3, JavaScript for documentation
+            website
+          </li>
+          <li>
+            <strong>Hosting:</strong> GitHub Pages for static site hosting
+          </li>
+          <li>
+            <strong>Version Control:</strong> Git/GitHub for code management and
+            collaboration
+          </li>
+          <li>
+            <strong>Development Tools:</strong> Visual Studio Code, Python
+            virtual environments
+          </li>
+          <li>
+            <strong>Testing:</strong> Manual testing across Windows 10/11 and
+            Parrot OS
+          </li>
+        </ul>
+      </section>
+
+      <!-- LEARNING OUTCOMES -->
+      <section class="container">
+        <h2>Learning Outcomes & Skills Demonstrated</h2>
+        <ul>
+          <li>
+            <strong>Web Automation:</strong> Mastered Selenium WebDriver for
+            complex browser automation tasks
+          </li>
+          <li>
+            <strong>Cross-Platform Development:</strong> Built software that
+            runs seamlessly on multiple operating systems
+          </li>
+          <li>
+            <strong>API Integration:</strong> Successfully integrated external
+            APIs with error handling and fallbacks
+          </li>
+          <li>
+            <strong>Technical Documentation:</strong> Created comprehensive
+            user-friendly documentation website
+          </li>
+          <li>
+            <strong>Anti-Detection Techniques:</strong> Implemented strategies
+            to avoid automated detection systems
+          </li>
+          <li>
+            <strong>Problem Solving:</strong> Overcame challenges related to
+            platform differences and API reliability
+          </li>
+        </ul>
+      </section>
+
+      <!-- FUTURE ENHANCEMENTS -->
+      <section class="container">
+        <h2>Future Enhancements</h2>
+        <ul>
+          <li>GUI application using Tkinter or PyQt for non-technical users</li>
+          <li>
+            Scheduled execution with cron jobs (Linux) or Task Scheduler
+            (Windows)
+          </li>
+          <li>
+            Multi-account support for managing multiple Microsoft accounts
+          </li>
+          <li>Email notifications for completion status and rewards earned</li>
+          <li>Enhanced logging with detailed analytics and statistics</li>
+          <li>Mobile support through cloud-based execution</li>
+          <li>Integration with other rewards programs beyond Microsoft</li>
+          <li>Machine learning for optimizing search patterns</li>
+        </ul>
+      </section>
+
+      <!-- LINKS -->
+      <div class="links-section">
+        <h2 style="border: none; margin-bottom: 20px">Links & Resources</h2>
+        <a
+          href="https://illusory-warden.github.io/Browser_Automation_3.0/"
+          target="_blank"
+          >Project Website</a
+        >
+        <a
+          href="https://github.com/Illusory-Warden/Browser_Automation_3.0"
+          target="_blank"
+          >Project GitHub Repository</a
+        >
+        <a href="https://github.com/Illusory-Warden" target="_blank"
+          >GitHub Profile</a
+        >
+      </div>
+
+      <!-- BACK TO PORTFOLIO -->
+      <div style="text-align: center; margin: 40px 0">
+        <a href="index.html" class="back-link">← Back to Portfolio</a>
+      </div>
+    </div>
+
+    <!-- GO TO TOP BUTTON -->
+    <button id="goTopBtn" onclick="scrollToTop()">↑ Top</button>
+
+    <script>
+      // DARK MODE FUNCTIONALITY
+      function toggleTheme() {
+        const html = document.documentElement;
+        const currentTheme = html.getAttribute("data-theme");
+        const newTheme = currentTheme === "dark" ? "light" : "dark";
+        const themeIcon = document.getElementById("themeIcon");
+
+        html.setAttribute("data-theme", newTheme);
+        localStorage.setItem("theme", newTheme);
+
+        themeIcon.textContent = newTheme === "dark" ? "☀️" : "🌙";
+      }
+
+      // Load saved theme on page load
+      function loadTheme() {
+        const savedTheme = localStorage.getItem("theme") || "light";
+        const themeIcon = document.getElementById("themeIcon");
+
+        document.documentElement.setAttribute("data-theme", savedTheme);
+        themeIcon.textContent = savedTheme === "dark" ? "☀️" : "🌙";
+      }
+
+      // SCROLL ANIMATION
+      function animateOnScroll() {
+        const containers = document.querySelectorAll(".container");
+
+        containers.forEach((container) => {
+          const containerTop = container.getBoundingClientRect().top;
+          const containerBottom = container.getBoundingClientRect().bottom;
+          const windowHeight = window.innerHeight;
+
+          if (containerTop < windowHeight * 0.8 && containerBottom > 0) {
+            container.classList.add("visible");
+          }
+        });
+      }
+
+      // GO TO TOP BUTTON
+      window.onscroll = function () {
+        animateOnScroll();
+
+        const btn = document.getElementById("goTopBtn");
+        if (
+          document.body.scrollTop > 200 ||
+          document.documentElement.scrollTop > 200
+        ) {
+          btn.style.display = "block";
+        } else {
+          btn.style.display = "none";
+        }
+      };
+
+      function scrollToTop() {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }
+
+      // Run on page load
+      window.addEventListener("load", function () {
+        loadTheme();
+        animateOnScroll();
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AroGuard - Food Ingredient Decoder - Rushi Daulatkar</title>
+    <meta
+      name="description"
+      content="AI-powered web application to decode food ingredients, E-numbers, and preservatives with real-time safety analysis"
+    />
+    <style>
+      /* RESET & BASE STYLES */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      /* ROOT VARIABLES FOR THEMING */
+      :root {
+        --bg-primary: #ffffff;
+        --bg-secondary: #fafafa;
+        --bg-tertiary: #f5f5f5;
+        --bg-placeholder: #f9f9f9;
+        --text-primary: #000000;
+        --text-secondary: #666666;
+        --border-primary: #000000;
+        --border-secondary: #cccccc;
+        --border-tertiary: #dddddd;
+        --link-color: #0066cc;
+        --link-hover: #003d7a;
+        --shadow-color: rgba(0, 0, 0, 0.1);
+      }
+
+      /* DARK MODE VARIABLES */
+      [data-theme="dark"] {
+        --bg-primary: #1a1a1a;
+        --bg-secondary: #2d2d2d;
+        --bg-tertiary: #383838;
+        --bg-placeholder: #2a2a2a;
+        --text-primary: #e0e0e0;
+        --text-secondary: #a0a0a0;
+        --border-primary: #ffffff;
+        --border-secondary: #404040;
+        --border-tertiary: #505050;
+        --link-color: #66b3ff;
+        --link-hover: #99ccff;
+        --shadow-color: rgba(255, 255, 255, 0.1);
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        padding-top: 60px;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      /* NAVIGATION BAR */
+      .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: var(--bg-primary);
+        border-bottom: 2px solid var(--border-primary);
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+        box-shadow: 0 2px 4px var(--shadow-color);
+      }
+
+      .navbar a {
+        color: var(--text-primary);
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 18px;
+        transition: color 0.3s ease;
+      }
+
+      .navbar a:hover {
+        color: var(--link-color);
+      }
+
+      #themeToggle {
+        padding: 8px 14px;
+        background: var(--bg-primary);
+        border: 2px solid var(--border-primary);
+        cursor: pointer;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+      }
+
+      #themeToggle:hover {
+        background: var(--border-primary);
+        color: var(--bg-primary);
+        transform: translateY(-2px);
+      }
+
+      /* MAIN CONTENT */
+      .content {
+        padding: 20px;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      /* CONTAINER BOXES */
+      .container {
+        border: 1px solid var(--border-secondary);
+        padding: 20px;
+        margin: 20px 0;
+        background: var(--bg-primary);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease, transform 0.6s ease,
+          background-color 0.3s ease, border-color 0.3s ease,
+          box-shadow 0.3s ease;
+        box-shadow: 0 2px 4px var(--shadow-color);
+      }
+
+      .container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px var(--shadow-color);
+      }
+
+      .container.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .container.visible:hover {
+        transform: translateY(-5px);
+      }
+
+      /* HEADER */
+      .page-header {
+        border: 2px solid var(--border-primary);
+        padding: 20px;
+        margin-bottom: 30px;
+        background: var(--bg-primary);
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px var(--shadow-color);
+      }
+
+      .page-header:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px var(--shadow-color);
+      }
+
+      .page-header h1 {
+        font-size: 28px;
+        margin-bottom: 10px;
+        color: var(--text-primary);
+      }
+
+      .back-link {
+        display: inline-block;
+        padding: 8px 16px;
+        border: 1px solid var(--border-primary);
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .back-link:hover {
+        background: var(--border-primary);
+        color: var(--bg-primary);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px var(--shadow-color);
+        text-decoration: none;
+      }
+
+      /* SECTION HEADINGS */
+      h2 {
+        font-size: 22px;
+        margin-bottom: 15px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid var(--border-primary);
+        color: var(--text-primary);
+      }
+
+      h3 {
+        font-size: 18px;
+        margin: 15px 0 10px 0;
+        color: var(--text-primary);
+      }
+
+      /* LINKS */
+      a {
+        color: var(--link-color);
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      a:hover {
+        color: var(--link-hover);
+        text-decoration: underline;
+      }
+
+      /* LISTS */
+      ul {
+        margin-left: 20px;
+        margin-top: 10px;
+      }
+
+      li {
+        margin: 8px 0;
+        color: var(--text-primary);
+      }
+
+      /* SUBSECTIONS */
+      .subsection {
+        border: 1px solid var(--border-tertiary);
+        padding: 15px;
+        margin: 15px 0;
+        background: var(--bg-secondary);
+        transition: all 0.3s ease;
+        box-shadow: 0 1px 3px var(--shadow-color);
+      }
+
+      .subsection:hover {
+        transform: translateX(5px);
+        box-shadow: 0 4px 8px var(--shadow-color);
+      }
+
+      .subsection strong {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--text-primary);
+      }
+
+      /* IMAGE PLACEHOLDERS */
+      .image-placeholder {
+        border: 2px dashed var(--border-secondary);
+        padding: 40px;
+        margin: 20px 0;
+        text-align: center;
+        background: var(--bg-placeholder);
+        color: var(--text-secondary);
+        transition: all 0.3s ease;
+      }
+
+      .image-placeholder:hover {
+        border-color: var(--border-primary);
+        transform: scale(1.02);
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        border: 1px solid var(--border-secondary);
+        margin: 20px 0;
+        transition: all 0.3s ease;
+      }
+
+      img:hover {
+        transform: scale(1.02);
+        box-shadow: 0 8px 16px var(--shadow-color);
+      }
+
+      .image-caption {
+        font-style: italic;
+        margin-top: 5px;
+        color: var(--text-secondary);
+      }
+
+      /* PROJECT INFO BOX */
+      .info-box {
+        border: 2px solid var(--border-primary);
+        padding: 15px;
+        margin: 20px 0;
+        background: var(--bg-tertiary);
+        transition: all 0.3s ease;
+      }
+
+      .info-box p {
+        margin: 5px 0;
+        color: var(--text-primary);
+      }
+
+      /* CHALLENGE BOXES */
+      .challenge-box {
+        border-left: 4px solid var(--border-primary);
+        padding: 15px;
+        margin: 20px 0;
+        background: var(--bg-secondary);
+        transition: all 0.3s ease;
+        box-shadow: 0 1px 3px var(--shadow-color);
+      }
+
+      .challenge-box:hover {
+        transform: translateX(5px);
+        box-shadow: 0 4px 8px var(--shadow-color);
+      }
+
+      /* LINKS SECTION */
+      .links-section {
+        border: 2px solid var(--border-primary);
+        padding: 20px;
+        margin: 30px 0;
+        text-align: center;
+        background: var(--bg-primary);
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px var(--shadow-color);
+      }
+
+      .links-section:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px var(--shadow-color);
+      }
+
+      .links-section a {
+        display: inline-block;
+        margin: 5px 10px;
+        padding: 10px 20px;
+        border: 1px solid var(--border-primary);
+        background: var(--border-primary);
+        color: var(--bg-primary);
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .links-section a:hover {
+        background: var(--bg-primary);
+        color: var(--border-primary);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px var(--shadow-color);
+      }
+
+      /* GO TO TOP BUTTON */
+      #goTopBtn {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        display: none;
+        padding: 12px 18px;
+        background: var(--border-primary);
+        color: var(--bg-primary);
+        border: 2px solid var(--border-primary);
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 8px var(--shadow-color);
+        z-index: 999;
+      }
+
+      #goTopBtn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px var(--shadow-color);
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 600px) {
+        body {
+          padding-top: 60px;
+        }
+
+        .content {
+          padding: 10px;
+        }
+
+        .container {
+          padding: 15px;
+        }
+
+        #themeToggle {
+          padding: 6px 10px;
+          font-size: 16px;
+        }
+
+        .navbar {
+          padding: 12px 15px;
+        }
+
+        .navbar a {
+          font-size: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAVIGATION BAR -->
+    <nav class="navbar">
+      <a href="index.html">Home</a>
+      <button
+        id="themeToggle"
+        onclick="toggleTheme()"
+        aria-label="Toggle dark mode"
+      >
+        <span id="themeIcon">🌙</span>
+      </button>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="content">
+      <!-- PAGE HEADER -->
+      <div class="page-header">
+        <h1>AroGuard – Food Ingredient Decoder</h1>
+        <p><a href="index.html" class="back-link">← Back to Portfolio</a></p>
+      </div>
+
+      <!-- PROJECT OVERVIEW -->
+      <section class="container">
+        <div class="info-box">
+          <p><strong>Duration:</strong> Nov 2025 – Dec 2025</p>
+          <p>
+            <strong>Technologies:</strong> React, TypeScript, Groq AI, Tailwind
+            CSS, Recharts, Open Food Facts API
+          </p>
+          <p>
+            <strong>Category:</strong> Web Development, AI Integration, Health
+            Tech
+          </p>
+        </div>
+      </section>
+
+      <!-- DESCRIPTION -->
+      <section class="container">
+        <h2>Description</h2>
+        <p>
+          AroGuard is an AI-powered web application designed to help users make
+          informed decisions about food products by decoding complex ingredient
+          lists, E-numbers, and preservatives. The application leverages Groq AI
+          to provide real-time safety analysis and comprehensive ingredient
+          information, making it easier for health-conscious consumers to
+          understand what they're eating.
+        </p>
+        <p style="margin-top: 15px">
+          Built with modern web technologies including React and TypeScript,
+          AroGuard combines multiple data sources and AI capabilities to deliver
+          a seamless user experience with instant ingredient analysis, allergen
+          detection, and interactive visualizations.
+        </p>
+      </section>
+
+      <!-- KEY ACHIEVEMENTS -->
+      <section class="container">
+        <h2>Key Features & Achievements</h2>
+        <ul>
+          <li>
+            <strong>AI-Powered Analysis:</strong> Integrated Groq AI API for
+            intelligent ingredient decoding and safety classification
+          </li>
+          <li>
+            <strong>Real-Time Safety Classification:</strong> Instant
+            categorization of ingredients into safe, caution, and harmful
+            categories
+          </li>
+          <li>
+            <strong>Interactive Visualizations:</strong> Dynamic pie charts
+            using Recharts library to display ingredient safety breakdown
+          </li>
+          <li>
+            <strong>Barcode Search:</strong> Quick product lookup using barcode
+            scanning functionality
+          </li>
+          <li>
+            <strong>Open Food Facts Integration:</strong> Access to
+            comprehensive product database with AI fallback scraping
+          </li>
+          <li>
+            <strong>Allergen Detection:</strong> Automatic identification of
+            common allergens in ingredient lists
+          </li>
+          <li>
+            <strong>IndexedDB Caching:</strong> Offline-first architecture with
+            local data persistence for faster repeat searches
+          </li>
+          <li>
+            <strong>AI Chatbot:</strong> Interactive assistant for answering
+            ingredient-related questions
+          </li>
+          <li>
+            <strong>Type-Safe Development:</strong> Built with TypeScript for
+            enhanced code quality and maintainability
+          </li>
+        </ul>
+      </section>
+
+      <!-- IMAGE PLACEHOLDER 1 -->
+      <div class="image-placeholder">
+        <strong>📷 IMAGE PLACEHOLDER 1</strong><br />
+        ADD IMAGE: images/aroguard-main-interface.jpg<br />
+        Screenshot of main AroGuard interface<br />
+        Show: Search bar, product input, main dashboard<br />
+        Recommended size: 1920x1080px
+      </div>
+
+      <!-- TECHNICAL ARCHITECTURE -->
+      <section class="container">
+        <h2>Technical Architecture</h2>
+
+        <div class="subsection">
+          <strong>Frontend Layer</strong>
+          <ul>
+            <li>
+              React 18 with TypeScript for type-safe component development
+            </li>
+            <li>Tailwind CSS for responsive and modern UI design</li>
+            <li>Recharts library for interactive data visualizations</li>
+            <li>
+              Component-based architecture for reusability and maintainability
+            </li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>AI Integration Layer</strong>
+          <ul>
+            <li>
+              Groq AI API for natural language processing of ingredient data
+            </li>
+            <li>Intelligent ingredient classification algorithm</li>
+            <li>Context-aware safety analysis based on health standards</li>
+            <li>AI chatbot for interactive user queries</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>Data Layer</strong>
+          <ul>
+            <li>
+              Open Food Facts API for comprehensive product database access
+            </li>
+            <li>AI-powered web scraping as fallback data source</li>
+            <li>IndexedDB for client-side caching and offline functionality</li>
+            <li>Real-time data synchronization between sources</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- IMAGE PLACEHOLDER 2 -->
+      <div class="image-placeholder">
+        <strong>📷 IMAGE PLACEHOLDER 2</strong><br />
+        ADD IMAGE: images/aroguard-analysis-results.jpg<br />
+        Screenshot of ingredient analysis results<br />
+        Show: Detailed ingredient breakdown, safety classifications<br />
+        Recommended size: 1920x1080px
+      </div>
+
+      <!-- CORE FEATURES -->
+      <section class="container">
+        <h2>Core Features</h2>
+
+        <div class="subsection">
+          <strong>Ingredient Decoder</strong>
+          <ul>
+            <li>Comprehensive E-number database with detailed explanations</li>
+            <li>Preservative identification and safety information</li>
+            <li>
+              Additive classification (colorants, sweeteners, stabilizers, etc.)
+            </li>
+            <li>Natural vs synthetic ingredient differentiation</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>Safety Classification System</strong>
+          <ul>
+            <li>
+              <strong>Safe:</strong> Generally recognized as safe ingredients
+              with no known health concerns
+            </li>
+            <li>
+              <strong>Caution:</strong> Ingredients that may cause reactions in
+              sensitive individuals
+            </li>
+            <li>
+              <strong>Harmful:</strong> Ingredients with potential health risks
+              or regulatory concerns
+            </li>
+            <li>Visual color-coding for quick identification</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>Allergen Detection</strong>
+          <ul>
+            <li>
+              Automatic detection of 14 major allergens (milk, eggs, nuts, soy,
+              etc.)
+            </li>
+            <li>Cross-contamination warnings</li>
+            <li>Highlighted allergen display in ingredient lists</li>
+            <li>Customizable allergen preferences</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- IMAGE PLACEHOLDER 3 -->
+      <div class="image-placeholder">
+        <strong>📷 IMAGE PLACEHOLDER 3</strong><br />
+        ADD IMAGE: images/aroguard-pie-chart.jpg<br />
+        Screenshot of Recharts pie chart visualization<br />
+        Show: Interactive pie chart with ingredient safety distribution<br />
+        Recommended size: 1200x800px
+      </div>
+
+      <!-- TECHNICAL CHALLENGES -->
+      <section class="container">
+        <h2>Technical Challenges & Solutions</h2>
+
+        <div class="challenge-box">
+          <strong>Challenge 1: Reliable Data Sourcing</strong>
+          <p>
+            Food product databases can be incomplete or outdated. Relying solely
+            on Open Food Facts API would result in missing data for many
+            products, especially regional or newly launched items.
+          </p>
+          <p style="margin-top: 10px">
+            <strong>Solution:</strong> Implemented a hybrid data strategy
+            combining Open Food Facts API as the primary source with AI-powered
+            web scraping as a fallback. The Groq AI model intelligently extracts
+            ingredient information from product websites when API data is
+            unavailable, ensuring comprehensive coverage.
+          </p>
+        </div>
+
+        <div class="challenge-box">
+          <strong>Challenge 2: Real-Time AI Processing Performance</strong>
+          <p>
+            Processing ingredient lists through AI models can introduce latency,
+            creating a poor user experience. Users expect instant results when
+            analyzing products.
+          </p>
+          <p style="margin-top: 10px">
+            <strong>Solution:</strong> Implemented IndexedDB caching to store
+            previously analyzed products locally. Combined with the fast
+            response times of Groq AI (optimized for speed), the application
+            delivers near-instant results for repeat searches while maintaining
+            quick first-time analysis.
+          </p>
+        </div>
+
+        <div class="challenge-box">
+          <strong>Challenge 3: Complex Ingredient Classification</strong>
+          <p>
+            Food ingredients can have complex names, E-numbers, and varying
+            safety profiles depending on concentration and individual
+            sensitivities. Creating accurate classifications requires
+            understanding nuanced health data.
+          </p>
+          <p style="margin-top: 10px">
+            <strong>Solution:</strong> Leveraged Groq AI's natural language
+            understanding to analyze ingredients in context. The AI considers
+            multiple factors including regulatory status, common allergies,
+            concentration levels, and recent research to provide nuanced safety
+            classifications rather than binary safe/unsafe ratings.
+          </p>
+        </div>
+      </section>
+
+      <!-- IMAGE PLACEHOLDER 4 -->
+      <div class="image-placeholder">
+        <strong>📷 IMAGE PLACEHOLDER 4</strong><br />
+        ADD IMAGE: images/aroguard-chatbot.jpg<br />
+        Screenshot of AI chatbot interface<br />
+        Show: Chat interface with ingredient-related Q&A<br />
+        Recommended size: 1200x800px
+      </div>
+
+      <!-- REAL-WORLD IMPACT -->
+      <section class="container">
+        <h2>Real-World Impact & Use Cases</h2>
+        <ul>
+          <li>
+            <strong>Health-Conscious Consumers:</strong> Helps individuals make
+            informed decisions about processed foods and avoid harmful additives
+          </li>
+          <li>
+            <strong>Allergy Management:</strong> Critical tool for people with
+            food allergies to quickly identify dangerous ingredients
+          </li>
+          <li>
+            <strong>Parents:</strong> Enables parents to check children's snacks
+            and meals for harmful preservatives and additives
+          </li>
+          <li>
+            <strong>Dietary Restrictions:</strong> Supports vegan, vegetarian,
+            and religious dietary requirements by identifying animal-derived
+            ingredients
+          </li>
+          <li>
+            <strong>Nutritional Awareness:</strong> Educates users about common
+            food additives and their potential health effects
+          </li>
+          <li>
+            <strong>Shopping Assistant:</strong> Quick in-store analysis through
+            barcode scanning for instant product evaluation
+          </li>
+        </ul>
+      </section>
+
+      <!-- TECHNICAL IMPLEMENTATION -->
+      <section class="container">
+        <h2>Technical Implementation Details</h2>
+
+        <div class="subsection">
+          <strong>React + TypeScript Architecture</strong>
+          <ul>
+            <li>
+              Functional components with React Hooks (useState, useEffect,
+              useContext)
+            </li>
+            <li>Custom hooks for API calls and data management</li>
+            <li>
+              Type-safe props and state management with TypeScript interfaces
+            </li>
+            <li>Error boundaries for graceful error handling</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>Groq AI Integration</strong>
+          <ul>
+            <li>RESTful API calls to Groq endpoints for ingredient analysis</li>
+            <li>
+              Structured prompt engineering for accurate ingredient
+              classification
+            </li>
+            <li>Response parsing and validation</li>
+            <li>Token optimization for cost-effective API usage</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>Tailwind CSS Styling</strong>
+          <ul>
+            <li>Utility-first CSS approach for rapid UI development</li>
+            <li>Responsive design with mobile-first methodology</li>
+            <li>Custom color schemes for safety classifications</li>
+            <li>Dark mode support for better user experience</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>IndexedDB Caching Strategy</strong>
+          <ul>
+            <li>Client-side database for storing analyzed products</li>
+            <li>Automatic cache invalidation after 30 days</li>
+            <li>Fallback to API when cache is unavailable</li>
+            <li>Offline-first architecture for improved performance</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- TECHNOLOGIES USED -->
+      <section class="container">
+        <h2>Technologies & Tools Used</h2>
+        <ul>
+          <li><strong>Frontend Framework:</strong> React 18 with TypeScript</li>
+          <li>
+            <strong>Styling:</strong> Tailwind CSS for utility-first styling
+          </li>
+          <li>
+            <strong>AI Integration:</strong> Groq AI API for ingredient analysis
+          </li>
+          <li>
+            <strong>Data Visualization:</strong> Recharts for interactive charts
+          </li>
+          <li>
+            <strong>External APIs:</strong> Open Food Facts API for product data
+          </li>
+          <li>
+            <strong>Local Storage:</strong> IndexedDB for client-side caching
+          </li>
+          <li>
+            <strong>Build Tools:</strong> Vite for fast development and building
+          </li>
+          <li>
+            <strong>Version Control:</strong> Git/GitHub for code management
+          </li>
+        </ul>
+      </section>
+
+      <!-- FUTURE ENHANCEMENTS -->
+      <section class="container">
+        <h2>Future Enhancements</h2>
+        <ul>
+          <li>Mobile app development for iOS and Android platforms</li>
+          <li>User accounts with personalized allergen profiles</li>
+          <li>Community ratings and reviews for products</li>
+          <li>Integration with fitness tracking apps</li>
+          <li>Nutritional value analysis alongside ingredient safety</li>
+          <li>Multi-language support for global accessibility</li>
+          <li>Barcode scanner using device camera</li>
+          <li>Comparison feature for similar products</li>
+        </ul>
+      </section>
+
+      <!-- LINKS -->
+      <div class="links-section">
+        <h2 style="border: none; margin-bottom: 20px">Links & Resources</h2>
+        <a href="https://github.com/Illusory-Warden/AroGuard" target="_blank"
+          >Project GitHub Repository</a
+        >
+        <a href="https://github.com/Illusory-Warden" target="_blank"
+          >GitHub Profile</a
+        >
+      </div>
+
+      <!-- BACK TO PORTFOLIO -->
+      <div style="text-align: center; margin: 40px 0">
+        <a href="index.html" class="back-link">← Back to Portfolio</a>
+      </div>
+    </div>
+
+    <!-- GO TO TOP BUTTON -->
+    <button id="goTopBtn" onclick="scrollToTop()">↑ Top</button>
+
+    <script>
+      // DARK MODE FUNCTIONALITY
+      function toggleTheme() {
+        const html = document.documentElement;
+        const currentTheme = html.getAttribute("data-theme");
+        const newTheme = currentTheme === "dark" ? "light" : "dark";
+        const themeIcon = document.getElementById("themeIcon");
+
+        html.setAttribute("data-theme", newTheme);
+        localStorage.setItem("theme", newTheme);
+
+        themeIcon.textContent = newTheme === "dark" ? "☀️" : "🌙";
+      }
+
+      // Load saved theme on page load
+      function loadTheme() {
+        const savedTheme = localStorage.getItem("theme") || "light";
+        const themeIcon = document.getElementById("themeIcon");
+
+        document.documentElement.setAttribute("data-theme", savedTheme);
+        themeIcon.textContent = savedTheme === "dark" ? "☀️" : "🌙";
+      }
+
+      // SCROLL ANIMATION
+      function animateOnScroll() {
+        const containers = document.querySelectorAll(".container");
+
+        containers.forEach((container) => {
+          const containerTop = container.getBoundingClientRect().top;
+          const containerBottom = container.getBoundingClientRect().bottom;
+          const windowHeight = window.innerHeight;
+
+          if (containerTop < windowHeight * 0.8 && containerBottom > 0) {
+            container.classList.add("visible");
+          }
+        });
+      }
+
+      // GO TO TOP BUTTON
+      window.onscroll = function () {
+        animateOnScroll();
+
+        const btn = document.getElementById("goTopBtn");
+        if (
+          document.body.scrollTop > 200 ||
+          document.documentElement.scrollTop > 200
+        ) {
+          btn.style.display = "block";
+        } else {
+          btn.style.display = "none";
+        }
+      };
+
+      function scrollToTop() {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }
+
+      // Run on page load
+      window.addEventListener("load", function () {
+        loadTheme();
+        animateOnScroll();
+      });
+    </script>
+  </body>
+</html>

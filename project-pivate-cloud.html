@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pi-Vate Cloud - Rushi Daulatkar</title>
+    <meta
+      name="description"
+      content="Self-hosted personal cloud ecosystem on Raspberry Pi with Zero-Trust Network Access"
+    />
+    <style>
+      /* RESET & BASE STYLES */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      /* ROOT VARIABLES FOR THEMING */
+      :root {
+        --bg-primary: #ffffff;
+        --bg-secondary: #fafafa;
+        --bg-tertiary: #f5f5f5;
+        --bg-placeholder: #f9f9f9;
+        --text-primary: #000000;
+        --text-secondary: #666666;
+        --border-primary: #000000;
+        --border-secondary: #cccccc;
+        --border-tertiary: #dddddd;
+        --link-color: #0066cc;
+        --link-hover: #003d7a;
+        --shadow-color: rgba(0, 0, 0, 0.1);
+      }
+
+      /* DARK MODE VARIABLES */
+      [data-theme="dark"] {
+        --bg-primary: #1a1a1a;
+        --bg-secondary: #2d2d2d;
+        --bg-tertiary: #383838;
+        --bg-placeholder: #2a2a2a;
+        --text-primary: #e0e0e0;
+        --text-secondary: #a0a0a0;
+        --border-primary: #ffffff;
+        --border-secondary: #404040;
+        --border-tertiary: #505050;
+        --link-color: #66b3ff;
+        --link-hover: #99ccff;
+        --shadow-color: rgba(255, 255, 255, 0.1);
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        padding-top: 60px;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      /* NAVIGATION BAR */
+      .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: var(--bg-primary);
+        border-bottom: 2px solid var(--border-primary);
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+        box-shadow: 0 2px 4px var(--shadow-color);
+      }
+
+      .navbar a {
+        color: var(--text-primary);
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 18px;
+        transition: color 0.3s ease;
+      }
+
+      .navbar a:hover {
+        color: var(--link-color);
+      }
+
+      #themeToggle {
+        padding: 8px 14px;
+        background: var(--bg-primary);
+        border: 2px solid var(--border-primary);
+        cursor: pointer;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+      }
+
+      #themeToggle:hover {
+        background: var(--border-primary);
+        color: var(--bg-primary);
+        transform: translateY(-2px);
+      }
+
+      /* MAIN CONTENT */
+      .content {
+        padding: 20px;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      /* CONTAINER BOXES */
+      .container {
+        border: 1px solid var(--border-secondary);
+        padding: 20px;
+        margin: 20px 0;
+        background: var(--bg-primary);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease, transform 0.6s ease,
+          background-color 0.3s ease, border-color 0.3s ease,
+          box-shadow 0.3s ease;
+        box-shadow: 0 2px 4px var(--shadow-color);
+      }
+
+      .container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px var(--shadow-color);
+      }
+
+      .container.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .container.visible:hover {
+        transform: translateY(-5px);
+      }
+
+      /* HEADER */
+      .page-header {
+        border: 2px solid var(--border-primary);
+        padding: 20px;
+        margin-bottom: 30px;
+        background: var(--bg-primary);
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px var(--shadow-color);
+      }
+
+      .page-header:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px var(--shadow-color);
+      }
+
+      .page-header h1 {
+        font-size: 28px;
+        margin-bottom: 10px;
+        color: var(--text-primary);
+      }
+
+      .back-link {
+        display: inline-block;
+        padding: 8px 16px;
+        border: 1px solid var(--border-primary);
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .back-link:hover {
+        background: var(--border-primary);
+        color: var(--bg-primary);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px var(--shadow-color);
+        text-decoration: none;
+      }
+
+      /* SECTION HEADINGS */
+      h2 {
+        font-size: 22px;
+        margin-bottom: 15px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid var(--border-primary);
+        color: var(--text-primary);
+      }
+
+      h3 {
+        font-size: 18px;
+        margin: 15px 0 10px 0;
+        color: var(--text-primary);
+      }
+
+      /* LINKS */
+      a {
+        color: var(--link-color);
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      a:hover {
+        color: var(--link-hover);
+        text-decoration: underline;
+      }
+
+      /* LISTS */
+      ul {
+        margin-left: 20px;
+        margin-top: 10px;
+      }
+
+      li {
+        margin: 8px 0;
+        color: var(--text-primary);
+      }
+
+      /* SUBSECTIONS */
+      .subsection {
+        border: 1px solid var(--border-tertiary);
+        padding: 15px;
+        margin: 15px 0;
+        background: var(--bg-secondary);
+        transition: all 0.3s ease;
+        box-shadow: 0 1px 3px var(--shadow-color);
+      }
+
+      .subsection:hover {
+        transform: translateX(5px);
+        box-shadow: 0 4px 8px var(--shadow-color);
+      }
+
+      .subsection strong {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--text-primary);
+      }
+
+      /* IMAGE PLACEHOLDERS */
+      .image-placeholder {
+        border: 2px dashed var(--border-secondary);
+        padding: 40px;
+        margin: 20px 0;
+        text-align: center;
+        background: var(--bg-placeholder);
+        color: var(--text-secondary);
+        transition: all 0.3s ease;
+      }
+
+      .image-placeholder:hover {
+        border-color: var(--border-primary);
+        transform: scale(1.02);
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        border: 1px solid var(--border-secondary);
+        margin: 20px 0;
+        transition: all 0.3s ease;
+      }
+
+      img:hover {
+        transform: scale(1.02);
+        box-shadow: 0 8px 16px var(--shadow-color);
+      }
+
+      .image-caption {
+        font-style: italic;
+        margin-top: 5px;
+        color: var(--text-secondary);
+      }
+
+      /* PROJECT INFO BOX */
+      .info-box {
+        border: 2px solid var(--border-primary);
+        padding: 15px;
+        margin: 20px 0;
+        background: var(--bg-tertiary);
+        transition: all 0.3s ease;
+      }
+
+      .info-box p {
+        margin: 5px 0;
+        color: var(--text-primary);
+      }
+
+      /* CHALLENGE BOXES */
+      .challenge-box {
+        border-left: 4px solid var(--border-primary);
+        padding: 15px;
+        margin: 20px 0;
+        background: var(--bg-secondary);
+        transition: all 0.3s ease;
+        box-shadow: 0 1px 3px var(--shadow-color);
+      }
+
+      .challenge-box:hover {
+        transform: translateX(5px);
+        box-shadow: 0 4px 8px var(--shadow-color);
+      }
+
+      /* LINKS SECTION */
+      .links-section {
+        border: 2px solid var(--border-primary);
+        padding: 20px;
+        margin: 30px 0;
+        text-align: center;
+        background: var(--bg-primary);
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px var(--shadow-color);
+      }
+
+      .links-section:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px var(--shadow-color);
+      }
+
+      .links-section a {
+        display: inline-block;
+        margin: 5px 10px;
+        padding: 10px 20px;
+        border: 1px solid var(--border-primary);
+        background: var(--border-primary);
+        color: var(--bg-primary);
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .links-section a:hover {
+        background: var(--bg-primary);
+        color: var(--border-primary);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px var(--shadow-color);
+      }
+
+      /* GO TO TOP BUTTON */
+      #goTopBtn {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        display: none;
+        padding: 12px 18px;
+        background: var(--border-primary);
+        color: var(--bg-primary);
+        border: 2px solid var(--border-primary);
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 8px var(--shadow-color);
+        z-index: 999;
+      }
+
+      #goTopBtn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px var(--shadow-color);
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 600px) {
+        body {
+          padding-top: 60px;
+        }
+
+        .content {
+          padding: 10px;
+        }
+
+        .container {
+          padding: 15px;
+        }
+
+        #themeToggle {
+          padding: 6px 10px;
+          font-size: 16px;
+        }
+
+        .navbar {
+          padding: 12px 15px;
+        }
+
+        .navbar a {
+          font-size: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAVIGATION BAR -->
+    <nav class="navbar">
+      <a href="index.html">Home</a>
+      <button
+        id="themeToggle"
+        onclick="toggleTheme()"
+        aria-label="Toggle dark mode"
+      >
+        <span id="themeIcon">🌙</span>
+      </button>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="content">
+      <!-- PAGE HEADER -->
+      <div class="page-header">
+        <h1>Pi-Vate Cloud</h1>
+        <p><a href="index.html" class="back-link">← Back to Portfolio</a></p>
+      </div>
+
+      <!-- PROJECT OVERVIEW -->
+      <section class="container">
+        <div class="info-box">
+          <p><strong>Duration:</strong> Aug 2025 – Dec 2025</p>
+          <p>
+            <strong>Technologies:</strong> Raspberry Pi 4, OpenMediaVault,
+            Docker, Plex Media Server, Twingate ZTNA
+          </p>
+          <p>
+            <strong>Category:</strong> Cloud Infrastructure, Self-Hosting,
+            Cybersecurity
+          </p>
+        </div>
+      </section>
+
+      <!-- DESCRIPTION -->
+      <section class="container">
+        <h2>Description</h2>
+        <p>
+          Pi-Vate Cloud is a comprehensive self-hosted personal cloud ecosystem
+          built on Raspberry Pi 4, designed as a cost-effective and
+          privacy-focused alternative to commercial cloud services like Google
+          One, Dropbox, and iCloud. The project demonstrates advanced skills in
+          network architecture, containerization, and zero-trust security
+          principles while achieving significant cost savings and complete data
+          sovereignty.
+        </p>
+      </section>
+
+      <!-- KEY ACHIEVEMENTS -->
+      <section class="container">
+        <h2>Key Features & Achievements</h2>
+        <ul>
+          <li>
+            <strong>54% Cost Savings:</strong> Comprehensive 5-year TCO analysis
+            showed massive savings compared to Google One (100GB plan)
+          </li>
+          <li>
+            <strong>Zero-Trust Security:</strong> Implemented Twingate ZTNA for
+            secure remote access without port forwarding, eliminating public
+            attack surface
+          </li>
+          <li>
+            <strong>Network Address Translation:</strong> All services
+            accessible remotely without exposing local network to internet
+            threats
+          </li>
+          <li>
+            <strong>Docker Containerization:</strong> Modular architecture with
+            isolated containers for Plex, backup services, and management tools
+          </li>
+          <li>
+            <strong>NAS Management:</strong> OpenMediaVault provides
+            enterprise-grade storage management with RAID support and automated
+            snapshots
+          </li>
+          <li>
+            <strong>Media Streaming:</strong> Plex Media Server enables
+            Netflix-like streaming of personal media library to any device
+          </li>
+          <li>
+            <strong>Complete Data Control:</strong> Full ownership and privacy
+            of personal data with no third-party access
+          </li>
+          <li>
+            <strong>Published Research:</strong> Accepted at ICIDA 2025
+            conference (Springer) - 15.8% acceptance rate
+          </li>
+        </ul>
+      </section>
+
+      <!-- IMAGE PLACEHOLDER 1 
+      <div class="image-placeholder">
+        <strong>📷 IMAGE PLACEHOLDER 1</strong><br />
+        ADD IMAGE: images/pivate-cloud-hardware.jpg<br />
+        Photo of Raspberry Pi 4 setup with external storage connected<br />
+        Show: Pi board, HDD/SSD, power supply, cooling, network cable<br />
+        Recommended size: 1200x800px landscape
+      </div>
+      -->
+
+      <figure>
+        <img
+          src="images/pivate-cloud-hardware.jpeg"
+          alt="Raspberry Pi 4 private cloud hardware setup with external storage"
+          loading="lazy"
+        />
+        <figcaption class="image-caption">
+          Raspberry Pi 4 private cloud hardware setup with external storage
+        </figcaption>
+      </figure>
+
+      <!-- TECHNICAL ARCHITECTURE -->
+      <section class="container">
+        <h2>Technical Architecture</h2>
+
+        <div class="subsection">
+          <strong>Hardware Layer</strong>
+          <ul>
+            <li>
+              Raspberry Pi 4 (4GB RAM model recommended for optimal performance)
+            </li>
+            <li>External storage (USB 3.0 HDD/SSD for data storage)</li>
+            <li>MicroSD card for OS and boot files</li>
+            <li>Active cooling solution for sustained performance</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>Operating System & Base Services</strong>
+          <ul>
+            <li>
+              Raspberry Pi OS Lite (headless configuration for efficiency)
+            </li>
+            <li>
+              OpenMediaVault for NAS management and web-based administration
+            </li>
+            <li>Docker Engine for containerized service deployment</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>Security Layer</strong>
+          <ul>
+            <li>
+              Twingate Zero-Trust Network Access (no port forwarding required)
+            </li>
+            <li>End-to-end encryption for all remote connections</li>
+            <li>Identity-based access control with MFA support</li>
+            <li>Network segmentation to isolate services</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- IMAGE PLACEHOLDER 2 
+      <div class="image-placeholder">
+        <strong>📷 IMAGE PLACEHOLDER 2</strong><br />
+        ADD IMAGE: images/pivate-cloud-omv-dashboard.jpg<br />
+        Screenshot of OpenMediaVault web interface<br />
+        Show: System status, storage management, running services<br />
+        BLUR: Personal info, IP addresses<br />
+        Recommended size: 1920x1080px
+      </div>
+      -->
+
+      <figure>
+        <img
+          src="images/pivate-cloud-omv-dashboard.png"
+          alt="OpenMediaVault dashboard showing system status and storage management"
+          loading="lazy"
+        />
+        <figcaption class="image-caption">
+          OpenMediaVault dashboard showing system status and storage management
+        </figcaption>
+      </figure>
+
+      <!-- APPLICATION SERVICES -->
+      <section class="container">
+        <h2>Application Services</h2>
+
+        <div class="subsection">
+          <strong>Plex Media Server</strong>
+          <ul>
+            <li>Automated media library organization and metadata fetching</li>
+            <li>Transcoding support for multiple device formats</li>
+            <li>
+              Remote streaming capabilities to phones, tablets, and smart TVs
+            </li>
+            <li>User management for family sharing</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>Backup & Synchronization</strong>
+          <ul>
+            <li>Automated backup scheduling</li>
+            <li>Incremental backup support for efficiency</li>
+            <li>Version control for critical files</li>
+            <li>Cross-device synchronization</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- IMAGE PLACEHOLDER 3 
+      <div class="image-placeholder">
+        <strong>📷 IMAGE PLACEHOLDER 3</strong><br />
+        ADD IMAGE: images/pivate-cloud-twingate.jpg<br />
+        Screenshot of Twingate dashboard or network diagram<br />
+        Show: Connector status, resources, security policies<br />
+        BLUR: Personal identifiers, actual IP addresses<br />
+        Recommended size: 1200x800px
+      </div>
+      -->
+      <figure>
+        <img
+          src="images/pivate-cloud-twingate.png"
+          alt="Twingate Zero Trust Network Access dashboard and architecture"
+          loading="lazy"
+        />
+        <figcaption class="image-caption">
+          Twingate Zero-Trust Network Access configuration and connector status
+        </figcaption>
+      </figure>
+
+      <!-- TECHNICAL CHALLENGES -->
+      <section class="container">
+        <h2>Technical Challenges & Solutions</h2>
+
+        <div class="challenge-box">
+          <strong
+            >Challenge 1: Secure Remote Access Without Port Forwarding</strong
+          >
+          <p>
+            Traditional remote access requires port forwarding, which exposes
+            your home network to potential attacks. Any misconfiguration can
+            create security vulnerabilities.
+          </p>
+          <p style="margin-top: 10px">
+            <strong>Solution:</strong> Implemented Twingate Zero-Trust Network
+            Access (ZTNA), which creates encrypted tunnels without requiring any
+            ports to be opened on the home router. All traffic is
+            identity-verified and encrypted end-to-end.
+          </p>
+        </div>
+
+        <div class="challenge-box">
+          <strong>Challenge 2: Resource Management on Limited Hardware</strong>
+          <p>
+            Raspberry Pi 4 has limited RAM (4GB) and CPU resources compared to
+            dedicated servers. Running multiple services simultaneously could
+            cause performance degradation.
+          </p>
+          <p style="margin-top: 10px">
+            <strong>Solution:</strong> Used Docker containerization to isolate
+            services and manage resource allocation efficiently. Each service
+            runs in its own container with defined resource limits. Implemented
+            active cooling to maintain stable CPU performance under load.
+          </p>
+        </div>
+
+        <div class="challenge-box">
+          <strong>Challenge 3: Data Redundancy and Backup</strong>
+          <p>
+            Hardware failures can lead to catastrophic data loss. Single-drive
+            storage on a Pi lacks the redundancy of enterprise NAS solutions.
+          </p>
+          <p style="margin-top: 10px">
+            <strong>Solution:</strong> Configured automated backup services with
+            OpenMediaVault, including scheduled snapshots and incremental
+            backups. Implemented external backup drives for critical data
+            redundancy. Used OpenMediaVault's SMART monitoring to predict drive
+            failures.
+          </p>
+        </div>
+      </section>
+
+      <!-- IMAGE PLACEHOLDER 4 
+      <div class="image-placeholder">
+        <strong>📷 IMAGE PLACEHOLDER 4</strong><br />
+        ADD IMAGE: images/pivate-cloud-plex.jpg<br />
+        Screenshot of Plex media server interface<br />
+        Show: Media library, streaming interface, Docker container<br />
+        BLUR: Personal media titles if needed<br />
+        Recommended size: 1920x1080px
+      </div>
+      -->
+      <figure>
+        <img
+          src="images/pivate-cloud-plex.png"
+          alt="Plex Media Server interface running in Docker on Raspberry Pi"
+          loading="lazy"
+        />
+        <figcaption class="image-caption">
+          Plex Media Server running in Docker on Raspberry Pi
+        </figcaption>
+      </figure>
+
+      <!-- COST ANALYSIS -->
+      <section class="container">
+        <h2>Cost Analysis</h2>
+        <p>Detailed total cost of ownership (TCO) comparison over 5 years:</p>
+
+        <div class="subsection">
+          <strong>Google One (100GB Plan)</strong>
+          <ul>
+            <li>Monthly cost: ₹130/month</li>
+            <li>5-year total: ₹7,800</li>
+            <li>Limited storage (100GB)</li>
+            <li>No ownership, subscription-based</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>Pi-Vate Cloud</strong>
+          <ul>
+            <li>
+              Initial hardware: ~₹8,000 (Raspberry Pi 4, storage, accessories)
+            </li>
+            <li>Electricity (5 years): ~₹1,800 (15W continuous usage)</li>
+            <li>5-year total: ~₹9,800 (one-time investment)</li>
+            <li>Storage: 1TB+ (expandable)</li>
+            <li>Full ownership and control</li>
+          </ul>
+        </div>
+
+        <p style="margin-top: 15px">
+          <strong>Result:</strong> Comparing against Google One 2TB plan
+          (₹650/month = ₹39,000 over 5 years), the savings become even more
+          dramatic at <strong>75% cost reduction</strong> with expandable
+          storage and complete data sovereignty.
+        </p>
+      </section>
+
+      <!-- REAL-WORLD IMPACT -->
+      <section class="container">
+        <h2>Real-World Impact & Use Cases</h2>
+        <ul>
+          <li>
+            <strong>Personal Cloud Storage:</strong> Store and access documents,
+            photos, and backups from anywhere
+          </li>
+          <li>
+            <strong>Media Streaming:</strong> Stream personal movie and music
+            collection to any device
+          </li>
+          <li>
+            <strong>Privacy:</strong> Complete control over personal data with
+            no third-party access
+          </li>
+          <li>
+            <strong>Learning Platform:</strong> Hands-on experience with cloud
+            architecture, Docker, networking, and cybersecurity
+          </li>
+          <li>
+            <strong>Cost Savings:</strong> One-time investment replaces
+            recurring monthly subscriptions
+          </li>
+          <li>
+            <strong>Scalability:</strong> Easily add more storage or services as
+            needs grow
+          </li>
+        </ul>
+      </section>
+
+      <!-- RESEARCH PUBLICATION -->
+      <section class="container">
+        <h2>Research Publication</h2>
+        <div class="info-box">
+          <p>
+            This project was accepted for presentation at the
+            <strong
+              >International Conference on Innovations in Data Analytics (ICIDA
+              2025)</strong
+            >
+            and will be published in Springer's Lecture Notes in Networks and
+            Systems (LNNS) series.
+          </p>
+          <ul style="margin-top: 10px">
+            <li>
+              <strong>Acceptance Rate:</strong> 15.8% (159 papers selected from
+              1,003 submissions)
+            </li>
+            <li><strong>Conference Date:</strong> December 7, 2025</li>
+            <li>
+              <strong>Publication Status:</strong> In Press (expected within 6
+              months)
+            </li>
+            <li>
+              <strong>Paper Title:</strong> "Pi-Vate Cloud: A Self-Sovereign,
+              Cost-Effective Personal Data-Ecosystem on Raspberry Pi"
+            </li>
+            <li>
+              <strong>Co-authors:</strong> R. Raut, R. Daulatkar, A. Dhote, A.
+              Pathode, H. Yadav
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- TECHNOLOGIES USED -->
+      <section class="container">
+        <h2>Technologies & Tools Used</h2>
+        <ul>
+          <li>
+            <strong>Hardware:</strong> Raspberry Pi 4 (4GB), External HDD/SSD,
+            Active cooling
+          </li>
+          <li><strong>Operating System:</strong> Raspberry Pi OS Lite</li>
+          <li><strong>NAS Platform:</strong> OpenMediaVault 6</li>
+          <li><strong>Containerization:</strong> Docker, Docker Compose</li>
+          <li><strong>Media Server:</strong> Plex Media Server</li>
+          <li>
+            <strong>Network Security:</strong> Twingate Zero-Trust Network
+            Access
+          </li>
+          <li><strong>File Systems:</strong> ext4, BTRFS (with snapshots)</li>
+          <li>
+            <strong>Networking:</strong> Static IP configuration, DHCP
+            reservation
+          </li>
+        </ul>
+      </section>
+
+      <!-- LINKS -->
+      <div class="links-section">
+        <h2 style="border: none; margin-bottom: 20px">Links & Resources</h2>
+        <a
+          href="https://illusory-warden.github.io/The_Atomic_Alliance/"
+          target="_blank"
+          >Project Website</a
+        >
+        <a
+          href="https://github.com/Illusory-Warden/The_Atomic_Alliance/"
+          target="_blank"
+          >Project GitHub Repository</a
+        >
+        <a href="https://github.com/Illusory-Warden" target="_blank"
+          >GitHub Profile</a
+        >
+      </div>
+
+      <!-- BACK TO PORTFOLIO -->
+      <div style="text-align: center; margin: 40px 0">
+        <a href="index.html" class="back-link">← Back to Portfolio</a>
+      </div>
+    </div>
+
+    <!-- GO TO TOP BUTTON -->
+    <button id="goTopBtn" onclick="scrollToTop()">↑ Top</button>
+
+    <script>
+      // DARK MODE FUNCTIONALITY
+      function toggleTheme() {
+        const html = document.documentElement;
+        const currentTheme = html.getAttribute("data-theme");
+        const newTheme = currentTheme === "dark" ? "light" : "dark";
+        const themeIcon = document.getElementById("themeIcon");
+
+        html.setAttribute("data-theme", newTheme);
+        localStorage.setItem("theme", newTheme);
+
+        themeIcon.textContent = newTheme === "dark" ? "☀️" : "🌙";
+      }
+
+      // Load saved theme on page load
+      function loadTheme() {
+        const savedTheme = localStorage.getItem("theme") || "light";
+        const themeIcon = document.getElementById("themeIcon");
+
+        document.documentElement.setAttribute("data-theme", savedTheme);
+        themeIcon.textContent = savedTheme === "dark" ? "☀️" : "🌙";
+      }
+
+      // SCROLL ANIMATION
+      function animateOnScroll() {
+        const containers = document.querySelectorAll(".container");
+
+        containers.forEach((container) => {
+          const containerTop = container.getBoundingClientRect().top;
+          const containerBottom = container.getBoundingClientRect().bottom;
+          const windowHeight = window.innerHeight;
+
+          if (containerTop < windowHeight * 0.8 && containerBottom > 0) {
+            container.classList.add("visible");
+          }
+        });
+      }
+
+      // GO TO TOP BUTTON
+      window.onscroll = function () {
+        animateOnScroll();
+
+        const btn = document.getElementById("goTopBtn");
+        if (
+          document.body.scrollTop > 200 ||
+          document.documentElement.scrollTop > 200
+        ) {
+          btn.style.display = "block";
+        } else {
+          btn.style.display = "none";
+        }
+      };
+
+      function scrollToTop() {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }
+
+      // Run on page load
+      window.addEventListener("load", function () {
+        loadTheme();
+        animateOnScroll();
+      });
+    </script>
+  </body>
+</html>

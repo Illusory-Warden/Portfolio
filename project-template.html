@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>[PROJECT NAME] - Rushi Daulatkar</title>
+    <meta name="description" content="[Brief project description for SEO]" />
+    <style>
+      /* RESET & BASE STYLES */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      /* ROOT VARIABLES FOR THEMING */
+      :root {
+        --bg-primary: #ffffff;
+        --bg-secondary: #fafafa;
+        --bg-tertiary: #f5f5f5;
+        --bg-placeholder: #f9f9f9;
+        --text-primary: #000000;
+        --text-secondary: #666666;
+        --border-primary: #000000;
+        --border-secondary: #cccccc;
+        --border-tertiary: #dddddd;
+        --link-color: #0066cc;
+        --link-hover: #003d7a;
+        --shadow-color: rgba(0, 0, 0, 0.1);
+      }
+
+      /* DARK MODE VARIABLES */
+      [data-theme="dark"] {
+        --bg-primary: #1a1a1a;
+        --bg-secondary: #2d2d2d;
+        --bg-tertiary: #383838;
+        --bg-placeholder: #2a2a2a;
+        --text-primary: #e0e0e0;
+        --text-secondary: #a0a0a0;
+        --border-primary: #ffffff;
+        --border-secondary: #404040;
+        --border-tertiary: #505050;
+        --link-color: #66b3ff;
+        --link-hover: #99ccff;
+        --shadow-color: rgba(255, 255, 255, 0.1);
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        padding-top: 60px;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      /* NAVIGATION BAR */
+      .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: var(--bg-primary);
+        border-bottom: 2px solid var(--border-primary);
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+        box-shadow: 0 2px 4px var(--shadow-color);
+      }
+
+      .navbar a {
+        color: var(--text-primary);
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 18px;
+        transition: color 0.3s ease;
+      }
+
+      .navbar a:hover {
+        color: var(--link-color);
+      }
+
+      #themeToggle {
+        padding: 8px 14px;
+        background: var(--bg-primary);
+        border: 2px solid var(--border-primary);
+        cursor: pointer;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+      }
+
+      #themeToggle:hover {
+        background: var(--border-primary);
+        color: var(--bg-primary);
+        transform: translateY(-2px);
+      }
+
+      /* MAIN CONTENT */
+      .content {
+        padding: 20px;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      /* CONTAINER BOXES */
+      .container {
+        border: 1px solid var(--border-secondary);
+        padding: 20px;
+        margin: 20px 0;
+        background: var(--bg-primary);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease, transform 0.6s ease,
+          background-color 0.3s ease, border-color 0.3s ease,
+          box-shadow 0.3s ease;
+        box-shadow: 0 2px 4px var(--shadow-color);
+      }
+
+      .container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px var(--shadow-color);
+      }
+
+      .container.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .container.visible:hover {
+        transform: translateY(-5px);
+      }
+
+      /* HEADER */
+      .page-header {
+        border: 2px solid var(--border-primary);
+        padding: 20px;
+        margin-bottom: 30px;
+        background: var(--bg-primary);
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px var(--shadow-color);
+      }
+
+      .page-header:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px var(--shadow-color);
+      }
+
+      .page-header h1 {
+        font-size: 28px;
+        margin-bottom: 10px;
+        color: var(--text-primary);
+      }
+
+      .back-link {
+        display: inline-block;
+        padding: 8px 16px;
+        border: 1px solid var(--border-primary);
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .back-link:hover {
+        background: var(--border-primary);
+        color: var(--bg-primary);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px var(--shadow-color);
+        text-decoration: none;
+      }
+
+      /* SECTION HEADINGS */
+      h2 {
+        font-size: 22px;
+        margin-bottom: 15px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid var(--border-primary);
+        color: var(--text-primary);
+      }
+
+      h3 {
+        font-size: 18px;
+        margin: 15px 0 10px 0;
+        color: var(--text-primary);
+      }
+
+      /* LINKS */
+      a {
+        color: var(--link-color);
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      a:hover {
+        color: var(--link-hover);
+        text-decoration: underline;
+      }
+
+      /* LISTS */
+      ul {
+        margin-left: 20px;
+        margin-top: 10px;
+      }
+
+      li {
+        margin: 8px 0;
+        color: var(--text-primary);
+      }
+
+      /* SUBSECTIONS */
+      .subsection {
+        border: 1px solid var(--border-tertiary);
+        padding: 15px;
+        margin: 15px 0;
+        background: var(--bg-secondary);
+        transition: all 0.3s ease;
+        box-shadow: 0 1px 3px var(--shadow-color);
+      }
+
+      .subsection:hover {
+        transform: translateX(5px);
+        box-shadow: 0 4px 8px var(--shadow-color);
+      }
+
+      .subsection strong {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--text-primary);
+      }
+
+      /* IMAGE PLACEHOLDERS */
+      .image-placeholder {
+        border: 2px dashed var(--border-secondary);
+        padding: 40px;
+        margin: 20px 0;
+        text-align: center;
+        background: var(--bg-placeholder);
+        color: var(--text-secondary);
+        transition: all 0.3s ease;
+      }
+
+      .image-placeholder:hover {
+        border-color: var(--border-primary);
+        transform: scale(1.02);
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        border: 1px solid var(--border-secondary);
+        margin: 20px 0;
+        transition: all 0.3s ease;
+      }
+
+      img:hover {
+        transform: scale(1.02);
+        box-shadow: 0 8px 16px var(--shadow-color);
+      }
+
+      .image-caption {
+        font-style: italic;
+        margin-top: 5px;
+        color: var(--text-secondary);
+      }
+
+      /* PROJECT INFO BOX */
+      .info-box {
+        border: 2px solid var(--border-primary);
+        padding: 15px;
+        margin: 20px 0;
+        background: var(--bg-tertiary);
+        transition: all 0.3s ease;
+      }
+
+      .info-box p {
+        margin: 5px 0;
+        color: var(--text-primary);
+      }
+
+      /* CHALLENGE BOXES */
+      .challenge-box {
+        border-left: 4px solid var(--border-primary);
+        padding: 15px;
+        margin: 20px 0;
+        background: var(--bg-secondary);
+        transition: all 0.3s ease;
+        box-shadow: 0 1px 3px var(--shadow-color);
+      }
+
+      .challenge-box:hover {
+        transform: translateX(5px);
+        box-shadow: 0 4px 8px var(--shadow-color);
+      }
+
+      /* LINKS SECTION */
+      .links-section {
+        border: 2px solid var(--border-primary);
+        padding: 20px;
+        margin: 30px 0;
+        text-align: center;
+        background: var(--bg-primary);
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px var(--shadow-color);
+      }
+
+      .links-section:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px var(--shadow-color);
+      }
+
+      .links-section a {
+        display: inline-block;
+        margin: 5px 10px;
+        padding: 10px 20px;
+        border: 1px solid var(--border-primary);
+        background: var(--border-primary);
+        color: var(--bg-primary);
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .links-section a:hover {
+        background: var(--bg-primary);
+        color: var(--border-primary);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px var(--shadow-color);
+      }
+
+      /* GO TO TOP BUTTON */
+      #goTopBtn {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        display: none;
+        padding: 12px 18px;
+        background: var(--border-primary);
+        color: var(--bg-primary);
+        border: 2px solid var(--border-primary);
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 8px var(--shadow-color);
+        z-index: 999;
+      }
+
+      #goTopBtn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px var(--shadow-color);
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 600px) {
+        body {
+          padding-top: 60px;
+        }
+
+        .content {
+          padding: 10px;
+        }
+
+        .container {
+          padding: 15px;
+        }
+
+        #themeToggle {
+          padding: 6px 10px;
+          font-size: 16px;
+        }
+
+        .navbar {
+          padding: 12px 15px;
+        }
+
+        .navbar a {
+          font-size: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAVIGATION BAR -->
+    <nav class="navbar">
+      <a href="index.html">Home</a>
+      <button
+        id="themeToggle"
+        onclick="toggleTheme()"
+        aria-label="Toggle dark mode"
+      >
+        <span id="themeIcon">🌙</span>
+      </button>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="content">
+      <!-- PAGE HEADER -->
+      <div class="page-header">
+        <h1>[PROJECT NAME]</h1>
+        <p><a href="index.html" class="back-link">← Back to Portfolio</a></p>
+      </div>
+
+      <!-- PROJECT OVERVIEW -->
+      <section class="container">
+        <div class="info-box">
+          <p><strong>Duration:</strong> [Month Year – Month Year]</p>
+          <p><strong>Technologies:</strong> [List all technologies used]</p>
+          <p><strong>Category:</strong> [Project category/domain]</p>
+        </div>
+      </section>
+
+      <!-- DESCRIPTION -->
+      <section class="container">
+        <h2>Description</h2>
+        <p>
+          [Write a comprehensive description of your project. Explain what it
+          does, why you built it, and what problems it solves. This should be
+          2-3 paragraphs.]
+        </p>
+        <p style="margin-top: 15px">
+          [Add additional context, background, or motivation for the project.]
+        </p>
+      </section>
+
+      <!-- KEY ACHIEVEMENTS -->
+      <section class="container">
+        <h2>Key Features & Achievements</h2>
+        <ul>
+          <li>
+            <strong>[Feature 1]:</strong> Description of the first major feature
+          </li>
+          <li>
+            <strong>[Feature 2]:</strong> Description of the second major
+            feature
+          </li>
+          <li>
+            <strong>[Feature 3]:</strong> Description of the third major feature
+          </li>
+          <li>
+            <strong>[Feature 4]:</strong> Description of the fourth major
+            feature
+          </li>
+          <li><strong>[Feature 5]:</strong> Add more features as needed</li>
+        </ul>
+      </section>
+
+      <!-- IMAGE PLACEHOLDER 1 -->
+      <div class="image-placeholder">
+        <strong>📷 IMAGE PLACEHOLDER 1</strong><br />
+        ADD IMAGE: images/[project-name]-screenshot1.jpg<br />
+        [Description of what this image should show]<br />
+        Recommended size: 1920x1080px
+      </div>
+      <!-- 
+      UNCOMMENT WHEN IMAGE IS READY:
+      <img src="images/[project-name]-screenshot1.jpg" alt="[Alt text for image]">
+      <p class="image-caption">[Caption describing the image]</p>
+      -->
+
+      <!-- TECHNICAL ARCHITECTURE -->
+      <section class="container">
+        <h2>Technical Architecture</h2>
+
+        <div class="subsection">
+          <strong>[Component/Layer 1]</strong>
+          <ul>
+            <li>Technology or tool used</li>
+            <li>Purpose and functionality</li>
+            <li>Implementation details</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>[Component/Layer 2]</strong>
+          <ul>
+            <li>Technology or tool used</li>
+            <li>Purpose and functionality</li>
+            <li>Implementation details</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>[Component/Layer 3]</strong>
+          <ul>
+            <li>Technology or tool used</li>
+            <li>Purpose and functionality</li>
+            <li>Implementation details</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- IMAGE PLACEHOLDER 2 -->
+      <div class="image-placeholder">
+        <strong>📷 IMAGE PLACEHOLDER 2</strong><br />
+        ADD IMAGE: images/[project-name]-screenshot2.jpg<br />
+        [Description of what this image should show]<br />
+        Recommended size: 1920x1080px
+      </div>
+
+      <!-- CORE FEATURES (OPTIONAL SECTION) -->
+      <section class="container">
+        <h2>[Core Features / How It Works / Implementation]</h2>
+
+        <div class="subsection">
+          <strong>[Feature/Step 1]</strong>
+          <ul>
+            <li>Detail about this feature or step</li>
+            <li>How it works technically</li>
+            <li>Benefits or outcomes</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>[Feature/Step 2]</strong>
+          <ul>
+            <li>Detail about this feature or step</li>
+            <li>How it works technically</li>
+            <li>Benefits or outcomes</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>[Feature/Step 3]</strong>
+          <ul>
+            <li>Detail about this feature or step</li>
+            <li>How it works technically</li>
+            <li>Benefits or outcomes</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- IMAGE PLACEHOLDER 3 -->
+      <div class="image-placeholder">
+        <strong>📷 IMAGE PLACEHOLDER 3</strong><br />
+        ADD IMAGE: images/[project-name]-screenshot3.jpg<br />
+        [Description of what this image should show]<br />
+        Recommended size: 1200x800px
+      </div>
+
+      <!-- TECHNICAL CHALLENGES -->
+      <section class="container">
+        <h2>Technical Challenges & Solutions</h2>
+
+        <div class="challenge-box">
+          <strong>Challenge 1: [Challenge Title]</strong>
+          <p>
+            [Describe the technical challenge you faced. Be specific about what
+            made it difficult and why it was a problem.]
+          </p>
+          <p style="margin-top: 10px">
+            <strong>Solution:</strong> [Explain how you solved the challenge.
+            Include technical details, tools used, and the reasoning behind your
+            approach.]
+          </p>
+        </div>
+
+        <div class="challenge-box">
+          <strong>Challenge 2: [Challenge Title]</strong>
+          <p>[Describe the second technical challenge.]</p>
+          <p style="margin-top: 10px">
+            <strong>Solution:</strong> [Explain your solution.]
+          </p>
+        </div>
+
+        <div class="challenge-box">
+          <strong>Challenge 3: [Challenge Title]</strong>
+          <p>[Describe the third technical challenge.]</p>
+          <p style="margin-top: 10px">
+            <strong>Solution:</strong> [Explain your solution.]
+          </p>
+        </div>
+      </section>
+
+      <!-- IMAGE PLACEHOLDER 4 -->
+      <div class="image-placeholder">
+        <strong>📷 IMAGE PLACEHOLDER 4</strong><br />
+        ADD IMAGE: images/[project-name]-screenshot4.jpg<br />
+        [Description of what this image should show]<br />
+        Recommended size: 1920x1080px
+      </div>
+
+      <!-- REAL-WORLD IMPACT -->
+      <section class="container">
+        <h2>Real-World Impact & Use Cases</h2>
+        <ul>
+          <li>
+            <strong>[Use Case 1]:</strong> Description of how the project is
+            used or its impact
+          </li>
+          <li>
+            <strong>[Use Case 2]:</strong> Another practical application or
+            benefit
+          </li>
+          <li><strong>[Use Case 3]:</strong> Additional use case or impact</li>
+          <li><strong>[Use Case 4]:</strong> More examples as needed</li>
+        </ul>
+      </section>
+
+      <!-- TECHNOLOGIES USED -->
+      <section class="container">
+        <h2>Technologies & Tools Used</h2>
+        <ul>
+          <li>
+            <strong>[Category 1]:</strong> List of technologies (e.g., Frontend:
+            React, TypeScript)
+          </li>
+          <li>
+            <strong>[Category 2]:</strong> More technologies (e.g., Backend:
+            Node.js, Express)
+          </li>
+          <li>
+            <strong>[Category 3]:</strong> Additional tools (e.g., Database:
+            MongoDB)
+          </li>
+          <li>
+            <strong>[Category 4]:</strong> Development tools (e.g., Tools: Git,
+            Docker)
+          </li>
+        </ul>
+      </section>
+
+      <!-- OPTIONAL: LEARNING OUTCOMES -->
+      <!-- 
+      <section class="container">
+        <h2>Learning Outcomes & Skills Demonstrated</h2>
+        <ul>
+          <li>[Skill or concept learned]</li>
+          <li>[Another skill developed]</li>
+          <li>[Technical expertise gained]</li>
+          <li>[Problem-solving ability demonstrated]</li>
+        </ul>
+      </section>
+      -->
+
+      <!-- OPTIONAL: FUTURE ENHANCEMENTS -->
+      <!-- 
+      <section class="container">
+        <h2>Future Enhancements</h2>
+        <ul>
+          <li>[Planned feature or improvement]</li>
+          <li>[Another enhancement idea]</li>
+          <li>[Scaling or optimization plan]</li>
+          <li>[Additional functionality to add]</li>
+        </ul>
+      </section>
+      -->
+
+      <!-- OPTIONAL: RESEARCH/PUBLICATION (if applicable) -->
+      <!-- 
+      <section class="container">
+        <h2>Research Publication</h2>
+        <div class="info-box">
+          <p>
+            [Description of publication, conference, or research paper]
+          </p>
+          <ul style="margin-top: 10px">
+            <li><strong>Conference/Journal:</strong> [Name]</li>
+            <li><strong>Date:</strong> [Publication date]</li>
+            <li><strong>Acceptance Rate:</strong> [If applicable]</li>
+            <li><strong>Status:</strong> [Published/In Press/Submitted]</li>
+          </ul>
+        </div>
+      </section>
+      -->
+
+      <!-- LINKS -->
+      <div class="links-section">
+        <h2 style="border: none; margin-bottom: 20px">Links & Resources</h2>
+        <!-- ADD YOUR PROJECT LINKS HERE -->
+        <!-- <a href="[LIVE-DEMO-URL]" target="_blank">🌐 Live Demo</a> -->
+        <!-- <a href="[GITHUB-REPO-URL]" target="_blank">💻 GitHub Repository</a> -->
+        <!-- <a href="[DOCUMENTATION-URL]" target="_blank">📄 Documentation</a> -->
+        <a href="https://github.com/Illusory-Warden" target="_blank"
+          >👤 GitHub Profile</a
+        >
+      </div>
+
+      <!-- BACK TO PORTFOLIO -->
+      <div style="text-align: center; margin: 40px 0">
+        <a href="index.html" class="back-link">← Back to Portfolio</a>
+      </div>
+    </div>
+
+    <!-- GO TO TOP BUTTON -->
+    <button id="goTopBtn" onclick="scrollToTop()">↑ Top</button>
+
+    <script>
+      // DARK MODE FUNCTIONALITY
+      function toggleTheme() {
+        const html = document.documentElement;
+        const currentTheme = html.getAttribute("data-theme");
+        const newTheme = currentTheme === "dark" ? "light" : "dark";
+        const themeIcon = document.getElementById("themeIcon");
+
+        html.setAttribute("data-theme", newTheme);
+        localStorage.setItem("theme", newTheme);
+
+        themeIcon.textContent = newTheme === "dark" ? "☀️" : "🌙";
+      }
+
+      // Load saved theme on page load
+      function loadTheme() {
+        const savedTheme = localStorage.getItem("theme") || "light";
+        const themeIcon = document.getElementById("themeIcon");
+
+        document.documentElement.setAttribute("data-theme", savedTheme);
+        themeIcon.textContent = savedTheme === "dark" ? "☀️" : "🌙";
+      }
+
+      // SCROLL ANIMATION
+      function animateOnScroll() {
+        const containers = document.querySelectorAll(".container");
+
+        containers.forEach((container) => {
+          const containerTop = container.getBoundingClientRect().top;
+          const containerBottom = container.getBoundingClientRect().bottom;
+          const windowHeight = window.innerHeight;
+
+          if (containerTop < windowHeight * 0.8 && containerBottom > 0) {
+            container.classList.add("visible");
+          }
+        });
+      }
+
+      // GO TO TOP BUTTON
+      window.onscroll = function () {
+        animateOnScroll();
+
+        const btn = document.getElementById("goTopBtn");
+        if (
+          document.body.scrollTop > 200 ||
+          document.documentElement.scrollTop > 200
+        ) {
+          btn.style.display = "block";
+        } else {
+          btn.style.display = "none";
+        }
+      };
+
+      function scrollToTop() {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }
+
+      // Run on page load
+      window.addEventListener("load", function () {
+        loadTheme();
+        animateOnScroll();
+      });
+    </script>
+  </body>
+</html>

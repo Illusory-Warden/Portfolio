@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rushi Daulatkar - Portfolio</title>
+    <meta
+      name="description"
+      content="Portfolio of Rushi Daulatkar - Computer Science undergraduate specializing in web development, automation, and cloud infrastructure."
+    />
+    <style>
+      /* RESET & BASE STYLES */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      /* ROOT VARIABLES FOR THEMING */
+      :root {
+        --bg-primary: #ffffff;
+        --bg-secondary: #fafafa;
+        --bg-tertiary: #f5f5f5;
+        --text-primary: #000000;
+        --text-secondary: #666666;
+        --border-primary: #000000;
+        --border-secondary: #cccccc;
+        --border-tertiary: #dddddd;
+        --link-color: #0066cc;
+        --link-hover: #003d7a;
+        --shadow-color: rgba(0, 0, 0, 0.1);
+      }
+
+      /* DARK MODE VARIABLES */
+      [data-theme="dark"] {
+        --bg-primary: #1a1a1a;
+        --bg-secondary: #2d2d2d;
+        --bg-tertiary: #383838;
+        --text-primary: #e0e0e0;
+        --text-secondary: #a0a0a0;
+        --border-primary: #ffffff;
+        --border-secondary: #404040;
+        --border-tertiary: #505050;
+        --link-color: #66b3ff;
+        --link-hover: #99ccff;
+        --shadow-color: rgba(255, 255, 255, 0.1);
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        padding-top: 60px;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      /* NAVIGATION BAR */
+      .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: var(--bg-primary);
+        border-bottom: 2px solid var(--border-primary);
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+        box-shadow: 0 2px 4px var(--shadow-color);
+      }
+
+      .navbar a {
+        color: var(--text-primary);
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 18px;
+        transition: color 0.3s ease;
+      }
+
+      .navbar a:hover {
+        color: var(--link-color);
+      }
+
+      #themeToggle {
+        padding: 8px 14px;
+        background: var(--bg-primary);
+        border: 2px solid var(--border-primary);
+        cursor: pointer;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+      }
+
+      #themeToggle:hover {
+        background: var(--border-primary);
+        color: var(--bg-primary);
+        transform: translateY(-2px);
+      }
+
+      /* MAIN CONTENT */
+      .content {
+        padding: 20px;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      /* CONTAINER BOXES - Minimal bordered boxes with 3D effect */
+      .container {
+        border: 1px solid var(--border-secondary);
+        padding: 20px;
+        margin: 20px 0;
+        background: var(--bg-primary);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease, transform 0.6s ease,
+          background-color 0.3s ease, border-color 0.3s ease,
+          box-shadow 0.3s ease;
+        box-shadow: 0 2px 4px var(--shadow-color);
+      }
+
+      .container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px var(--shadow-color);
+      }
+
+      .container.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .container.visible:hover {
+        transform: translateY(-5px);
+      }
+
+      /* HEADER CONTAINER */
+      header.container {
+        border: 2px solid var(--border-primary);
+        margin-bottom: 30px;
+      }
+
+      header h1 {
+        font-size: 28px;
+        margin-bottom: 5px;
+        color: var(--text-primary);
+      }
+
+      header p {
+        margin-bottom: 15px;
+        font-size: 16px;
+        color: var(--text-primary);
+      }
+
+      /* CONTACT BUTTONS */
+      .contact-buttons {
+        margin-top: 15px;
+      }
+
+      .contact-buttons a {
+        display: inline-block;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        padding: 8px 16px;
+        border: 1px solid var(--border-primary);
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .contact-buttons a:hover {
+        background: var(--border-primary);
+        color: var(--bg-primary);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px var(--shadow-color);
+      }
+
+      /* RESUME DOWNLOAD BUTTON - Highlighted */
+      .resume-btn {
+        background: var(--border-primary) !important;
+        color: var(--bg-primary) !important;
+        font-weight: bold;
+      }
+
+      .resume-btn:hover {
+        opacity: 0.8;
+      }
+
+      /* SECTION HEADINGS */
+      h2 {
+        font-size: 22px;
+        margin-bottom: 15px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid var(--border-primary);
+        color: var(--text-primary);
+      }
+
+      h3 {
+        font-size: 18px;
+        margin: 15px 0 10px 0;
+        color: var(--text-primary);
+      }
+
+      /* LINKS */
+      a {
+        color: var(--link-color);
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      a:hover {
+        color: var(--link-hover);
+        text-decoration: underline;
+      }
+
+      /* LISTS */
+      ul {
+        margin-left: 20px;
+        margin-top: 10px;
+      }
+
+      li {
+        margin: 8px 0;
+        color: var(--text-primary);
+      }
+
+      /* SUBSECTIONS - Additional boxes within sections */
+      .subsection {
+        border: 1px solid var(--border-tertiary);
+        padding: 15px;
+        margin: 15px 0;
+        background: var(--bg-secondary);
+        transition: all 0.3s ease;
+        box-shadow: 0 1px 3px var(--shadow-color);
+      }
+
+      .subsection:hover {
+        transform: translateX(5px);
+        box-shadow: 0 4px 8px var(--shadow-color);
+      }
+
+      .subsection strong {
+        display: block;
+        margin-bottom: 5px;
+        color: var(--text-primary);
+      }
+
+      /* GO TO TOP BUTTON */
+      #goTopBtn {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        display: none;
+        padding: 12px 18px;
+        background: var(--border-primary);
+        color: var(--bg-primary);
+        border: 2px solid var(--border-primary);
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 8px var(--shadow-color);
+        z-index: 999;
+      }
+
+      #goTopBtn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px var(--shadow-color);
+      }
+
+      /* FOOTER */
+      footer {
+        text-align: center;
+        margin-top: 40px;
+      }
+
+      .philosophy {
+        margin-top: 30px;
+        padding: 20px;
+        border: 1px solid var(--border-secondary);
+        background: var(--bg-tertiary);
+        font-style: italic;
+        color: var(--text-primary);
+        transition: all 0.3s ease;
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 600px) {
+        body {
+          padding-top: 60px;
+        }
+
+        .content {
+          padding: 10px;
+        }
+
+        .container {
+          padding: 15px;
+        }
+
+        .contact-buttons a {
+          display: block;
+          margin-bottom: 8px;
+        }
+
+        #themeToggle {
+          padding: 6px 10px;
+          font-size: 16px;
+        }
+
+        .navbar {
+          padding: 12px 15px;
+        }
+
+        .navbar a {
+          font-size: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAVIGATION BAR -->
+    <nav class="navbar">
+      <a href="index.html">Home</a>
+      <button
+        id="themeToggle"
+        onclick="toggleTheme()"
+        aria-label="Toggle dark mode"
+      >
+        <span id="themeIcon">🌙</span>
+      </button>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="content">
+      <!-- HEADER SECTION -->
+      <header class="container">
+        <h1>Rushi Daulatkar</h1>
+        <p>
+          <em>Creating Efficient Solutions Through Web & Task Automation</em>
+        </p>
+
+        <!-- CONTACT & RESUME BUTTONS -->
+        <div class="contact-buttons">
+          <a href="mailto:rushidaulatkar@proton.me">Email</a>
+          <a
+            href="https://www.linkedin.com/in/rushi-daulatkar-43669b299/"
+            target="_blank"
+            >LinkedIn</a
+          >
+          <a href="https://github.com/Illusory-Warden" target="_blank"
+            >GitHub</a
+          >
+          <a
+            href="resume/Rushi_Daulatkar_Resume.pdf"
+            download
+            class="resume-btn"
+            >Download Resume</a
+          >
+        </div>
+      </header>
+
+      <!-- SUMMARY SECTION -->
+      <section class="container">
+        <h2>Summary</h2>
+        <p>
+          Top-performing Computer Science undergraduate (1st Rank, CGPA 9.05/10)
+          and Innovolt Hackathon Winner with published research in Springer
+          (selected among top 15.8% of 1,003 papers at ICIDA 2025). Demonstrated
+          expertise in full-stack web development, intelligent automation, and
+          cloud infrastructure through production-ready applications including
+          AI-powered food analysis systems, self-hosted cloud solutions, and
+          cross-platform automation tools. Experienced in React.js, Python
+          automation, Docker containerization, and Zero-Trust network
+          architectures through internships at Descam Cybersecurity, Pinnacle
+          Labs, and Motion Cut. Cisco Networking certified with strong
+          foundation in databases, algorithms, and collaborative development.
+        </p>
+      </section>
+
+      <!-- EDUCATION SECTION -->
+      <section class="container">
+        <h2>Education</h2>
+
+        <div class="subsection">
+          <strong
+            >St. Vincent Pallotti College of Engineering and Technology</strong
+          >
+          - Nagpur, Maharashtra<br />
+          B.Tech in Computer Science and Business Systems (CSBS)<br />
+          CGPA: 9.05/10.0 | Aug 2023 – May 2027
+        </div>
+
+        <div class="subsection">
+          <strong>Dr. M.K. Umathe College of Science</strong> - Nagpur,
+          Maharashtra<br />
+          Higher Secondary Certificate (HSC) – Science Stream<br />
+          June 2022 – Feb 2023
+        </div>
+
+        <div class="subsection">
+          <strong>Tapasya Public School</strong> - Arvi, Wardha<br />
+          Secondary School Certificate (SSC) – CBSE<br />
+          June 2020 – Aug 2021
+        </div>
+      </section>
+
+      <!-- TECHNICAL SKILLS SECTION -->
+      <section class="container">
+        <h2>Technical Skills</h2>
+        <ul>
+          <li>
+            <strong>Web Technologies:</strong> React.js, HTML5, CSS3,
+            JavaScript, jQuery, Bootstrap, Tailwind CSS, RESTful APIs
+          </li>
+          <li><strong>Programming Languages:</strong> Python, C, C++</li>
+          <li>
+            <strong>Automation & Testing:</strong> Python (Selenium WebDriver),
+            Task Automation, Workflow Automation (n8n)
+          </li>
+          <li>
+            <strong>Databases:</strong> MySQL, Database Design & Optimization
+          </li>
+          <li>
+            <strong>Development Tools:</strong> Dbeaver, Git/GitHub, Visual
+            Studio Code, Docker, MySQL Workbench, IntelliJ IDEA
+          </li>
+          <li>
+            <strong>Hardware & Systems:</strong> Raspberry Pi, Linux Systems
+            Administration, Network Configuration
+          </li>
+          <li>
+            <strong>Core Competencies:</strong> Data Structures & Algorithms,
+            Zero-Trust Network Access (ZTNA), Cybersecurity Protocols
+          </li>
+          <li>
+            <strong>Languages:</strong> English (Fluent), Hindi (Native), German
+            (Basic)
+          </li>
+        </ul>
+      </section>
+
+      <!-- EXPERIENCE SECTION -->
+      <section class="container">
+        <h2>Experience</h2>
+
+        <div class="subsection">
+          <strong>Cybersecurity Intern</strong> - Descam Cybersecurity LLP,
+          Nagpur<br />
+          <em>Oct 2025 – Present</em>
+          <ul>
+            <li>
+              Engaged in cybersecurity operations including security assessment
+              and vulnerability analysis
+            </li>
+            <li>
+              Contributed to security projects while adhering to strict
+              confidentiality agreements and industry best practices
+            </li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>Web Development Intern</strong> - Pinnacle Labs, Remote<br />
+          <em>Apr 2024 – May 2024</em>
+          <ul>
+            <li>
+              Developed responsive web applications using React.js and managed
+              databases in a remote collaborative environment
+            </li>
+            <li>
+              Built mini-projects demonstrating component lifecycle, state
+              management, and API integration
+            </li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>Frontend Web Development Intern</strong> - Motion Cut Video
+          Studio, Remote<br />
+          <em>Nov 2023 – Dec 2023</em>
+          <ul>
+            <li>
+              Enhanced UI/UX design and optimized web performance using HTML,
+              CSS, and JavaScript
+            </li>
+            <li>
+              Improved website functionality and user experience through
+              frontend development best practices
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- PROJECTS SECTION -->
+      <section class="container">
+        <h2>Projects</h2>
+
+        <div class="subsection">
+          <strong><a href="project-pivate-cloud.html">Pi-Vate Cloud</a></strong
+          ><br />
+          <em
+            >Raspberry Pi, OpenMediaVault, Docker, Plex, Twingate | Aug 2025 –
+            Dec 2025</em
+          >
+          <ul>
+            <li>
+              Designed and deployed self-hosted personal cloud ecosystem on
+              Raspberry Pi 4 as cost-effective alternative to commercial cloud
+              services, achieving 54% cost savings over 5 years compared to
+              Google One
+            </li>
+            <li>
+              Implemented secure remote access using Twingate Zero-Trust Network
+              Access without port forwarding
+            </li>
+            <li>
+              Configured Docker containers for Plex media streaming and
+              automated backup services
+            </li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong
+            ><a href="project-aroguard.html"
+              >AroGuard – Food Ingredient Decoder</a
+            ></strong
+          ><br />
+          <em
+            >React, TypeScript, Groq AI, Tailwind CSS | Nov 2025 – Dec 2025</em
+          >
+          <ul>
+            <li>
+              Built AI-powered web application to decode food ingredients,
+              E-numbers, and preservatives using Groq API
+            </li>
+            <li>
+              Implemented real-time ingredient safety classification with
+              interactive Recharts pie chart visualizations
+            </li>
+            <li>
+              Integrated Open Food Facts API with AI fallback scraping for
+              comprehensive product analysis
+            </li>
+            <li>
+              Features include barcode search, allergen detection, IndexedDB
+              caching, and AI chatbot
+            </li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong
+            ><a href="project-browser-automation.html"
+              >Browser Automation 3.0</a
+            ></strong
+          ><br />
+          <em
+            >Python, Selenium WebDriver, HTML/CSS/JavaScript | Oct 2024 – Dec
+            2024</em
+          >
+          <ul>
+            <li>
+              Developed cross-platform Python automation tool that automatically
+              earns Microsoft Rewards points through intelligent search
+              automation
+            </li>
+            <li>
+              Implemented cross-platform compatibility with automated search
+              functionality using trending topics API integration
+            </li>
+            <li>
+              Created interactive setup website with step-by-step guides and
+              customizable search parameters
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- PUBLICATIONS SECTION -->
+      <section class="container">
+        <h2>Publications & Copyright</h2>
+
+        <div class="subsection">
+          <strong
+            >"Pi-Vate Cloud: A Self-Sovereign, Cost-Effective Personal
+            Data-Ecosystem on Raspberry Pi"</strong
+          ><br />
+          <em>Nov 2025</em>
+          <ul>
+            <li>
+              Innovations in Data Analytics – ICIDA 2025, Springer Lecture Notes
+              in Networks and Systems
+            </li>
+            <li>Presented at International Conference (December 7, 2025)</li>
+            <li>
+              Selected among top 159 out of 1,003 papers (15.8% acceptance rate)
+            </li>
+            <li>
+              Co-authors: R. Raut, R. Daulatkar, A. Dhote, A. Pathode, H. Yadav
+            </li>
+            <li>
+              Status: In Press – Expected publication in Springer LNNS within 6
+              months
+            </li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>Copyright Registration</strong><br />
+          "Building Your Own Cloud: Affordable, Private Storage with Raspberry
+          Pi" - Aug 2025<br />
+          Diary Number: LD-31512/2025-CO – Copyright Office, Government of India
+        </div>
+      </section>
+
+      <!-- ACHIEVEMENTS SECTION -->
+      <section class="container">
+        <h2>Achievements</h2>
+
+        <div class="subsection">
+          <strong>Academic Excellence – 1st Rank Academic Year 2024-25</strong>
+          <ul>
+            <li>
+              Achieved first rank in academic performance at St. Vincent
+              Pallotti College of Engineering & Technology with CGPA 9.05/10.0
+            </li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>Innovolt Hackathon Winner - Feb 2025</strong>
+          <ul>
+            <li>
+              Secured podium finish at Innovolt hackathon held at S. B. Jain
+              Institute of Technology, Management and Research, Nagpur
+            </li>
+            <li>
+              Developed software-based solution for optimizing cargo ship
+              navigation using routing algorithms and APIs to reduce fuel
+              consumption and environmental impact
+            </li>
+            <li>
+              Collaborated with team members to create real-world maritime
+              technology solution
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- CERTIFICATIONS SECTION -->
+      <section class="container">
+        <h2>Certifications</h2>
+
+        <div class="subsection">
+          <strong style="display: flex; align-items: center; gap: 10px">
+            n8n Workflow Automation Course – Level 1
+            <a
+              href="https://community.n8n.io/badges/104/completed-n8n-course-level-1?username=rushidaulatkar"
+              target="_blank"
+              class="cert-arrow"
+              title="View Certificate"
+              >↗</a
+            >
+          </strong>
+          n8n.io - Sep 2025<br />
+          Mastered workflow design, API integrations, conditional logic,
+          scheduling, and automation best practices
+        </div>
+
+        <div class="subsection">
+          <strong style="display: flex; align-items: center; gap: 10px">
+            Cisco Networking Basics Certification
+            <a
+              href="https://www.credly.com/badges/efeb53c0-4c3f-4609-9657-c636790bf843/public_url"
+              target="_blank"
+              class="cert-arrow"
+              title="View Certificate"
+              >↗</a
+            >
+          </strong>
+          Cisco Networking Academy - June 2025<br />
+          Validated knowledge of network fundamentals, protocols, and
+          infrastructure
+        </div>
+
+        <div class="subsection">
+          <strong style="display: flex; align-items: center; gap: 10px">
+            SQL (Basic) Certification
+            <a
+              href="https://www.hackerrank.com/certificates/iframe/5a8d1ea8418b"
+              target="_blank"
+              class="cert-arrow"
+              title="View Certificate"
+              >↗</a
+            >
+          </strong>
+          HackerRank - June 2025<br />
+          Validated proficiency in database querying, JOINs, aggregations, and
+          data manipulation
+        </div>
+
+        <div class="subsection">
+          <strong style="display: flex; align-items: center; gap: 10px">
+            SQL for Beginners: MySQL & Database Design
+            <a
+              href="https://moonshot.scaler.com/s/li/Ax2DEmWMs0"
+              target="_blank"
+              class="cert-arrow"
+              title="View Certificate"
+              >↗</a
+            >
+          </strong>
+          Scaler Topics - June 2025<br />
+          Completed 48 video tutorials, 5 modules, and 5 challenges covering
+          MySQL fundamentals and database optimization
+        </div>
+      </section>
+
+      <style>
+        .cert-arrow {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 32px;
+          height: 32px;
+          border: 2px solid var(--border-primary);
+          background: var(--bg-primary);
+          color: var(--text-primary);
+          text-decoration: none;
+          font-size: 18px;
+          font-weight: bold;
+          transition: all 0.3s ease;
+          flex-shrink: 0;
+        }
+
+        .cert-arrow:hover {
+          background: var(--border-primary);
+          color: var(--bg-primary);
+          transform: translateY(-2px);
+          box-shadow: 0 4px 8px var(--shadow-color);
+        }
+
+        .subsection strong {
+          margin-bottom: 8px;
+        }
+      </style>
+
+      <!-- FOOTER -->
+      <footer class="container">
+        <p>&copy; 2024 Rushi Daulatkar. All rights reserved.</p>
+
+        <!-- PHILOSOPHY STATEMENT -->
+        <div class="philosophy">
+          <p>
+            "A real portfolio isn't defined by fancy CSS or beautiful
+            decorations. A real portfolio is one that showcases great projects,
+            real solutions, and meaningful impact. The work speaks for itself."
+          </p>
+        </div>
+      </footer>
+    </div>
+
+    <!-- GO TO TOP BUTTON -->
+    <button id="goTopBtn" onclick="scrollToTop()">↑ Top</button>
+
+    <script>
+      // DARK MODE FUNCTIONALITY
+      function toggleTheme() {
+        const html = document.documentElement;
+        const currentTheme = html.getAttribute("data-theme");
+        const newTheme = currentTheme === "dark" ? "light" : "dark";
+        const themeIcon = document.getElementById("themeIcon");
+
+        html.setAttribute("data-theme", newTheme);
+        localStorage.setItem("theme", newTheme);
+
+        themeIcon.textContent = newTheme === "dark" ? "☀️" : "🌙";
+      }
+
+      // Load saved theme on page load
+      function loadTheme() {
+        const savedTheme = localStorage.getItem("theme") || "light";
+        const themeIcon = document.getElementById("themeIcon");
+
+        document.documentElement.setAttribute("data-theme", savedTheme);
+        themeIcon.textContent = savedTheme === "dark" ? "☀️" : "🌙";
+      }
+
+      // SCROLL ANIMATION - Fade in containers when visible
+      function animateOnScroll() {
+        const containers = document.querySelectorAll(".container");
+
+        containers.forEach((container) => {
+          const containerTop = container.getBoundingClientRect().top;
+          const containerBottom = container.getBoundingClientRect().bottom;
+          const windowHeight = window.innerHeight;
+
+          if (containerTop < windowHeight * 0.8 && containerBottom > 0) {
+            container.classList.add("visible");
+          }
+        });
+      }
+
+      // GO TO TOP BUTTON FUNCTIONALITY
+      window.onscroll = function () {
+        animateOnScroll();
+
+        const btn = document.getElementById("goTopBtn");
+        if (
+          document.body.scrollTop > 200 ||
+          document.documentElement.scrollTop > 200
+        ) {
+          btn.style.display = "block";
+        } else {
+          btn.style.display = "none";
+        }
+      };
+
+      // Smooth scroll to top
+      function scrollToTop() {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }
+
+      // Run on page load
+      window.addEventListener("load", function () {
+        loadTheme();
+        animateOnScroll();
+      });
+
+      // SMOOTH SCROLLING FOR ANCHOR LINKS
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          const href = this.getAttribute("href");
+          if (href !== "#" && href !== "#top") {
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) {
+              target.scrollIntoView({
+                behavior: "smooth",
+              });
+            }
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
