@@ -3,10 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AroGuard - Food Ingredient Decoder - Rushi Daulatkar</title>
+    <title>
+      AroGuard - Food Ingredient Decoder & Diet Planner - Rushi Daulatkar
+    </title>
     <meta
       name="description"
-      content="AI-powered web application to decode food ingredients, E-numbers, and preservatives with real-time safety analysis"
+      content="AI-powered web application to decode food ingredients, E-numbers, preservatives, and track nutrition with intelligent diet planning"
     />
     <style>
       /* RESET & BASE STYLES */
@@ -403,7 +405,7 @@
     <div class="content">
       <!-- PAGE HEADER -->
       <div class="page-header">
-        <h1>AroGuard – Food Ingredient Decoder</h1>
+        <h1>AroGuard – Food Ingredient Decoder & Diet Planner</h1>
         <p><a href="index.html" class="back-link">← Back to Portfolio</a></p>
       </div>
 
@@ -412,12 +414,13 @@
         <div class="info-box">
           <p><strong>Duration:</strong> Nov 2025 – Dec 2025</p>
           <p>
-            <strong>Technologies:</strong> React, TypeScript, Groq AI, Tailwind
-            CSS, Recharts, Open Food Facts API
+            <strong>Technologies:</strong> React, TypeScript, Groq AI,
+            Perplexity AI, Tailwind CSS, Recharts, shadcn/ui, jsPDF, IndexedDB,
+            Open Food Facts API
           </p>
           <p>
             <strong>Category:</strong> Web Development, AI Integration, Health
-            Tech
+            Tech, Nutrition Tracking
           </p>
         </div>
       </section>
@@ -426,73 +429,166 @@
       <section class="container">
         <h2>Description</h2>
         <p>
-          AroGuard is an AI-powered web application designed to help users make
-          informed decisions about food products by decoding complex ingredient
-          lists, E-numbers, and preservatives. The application leverages Groq AI
-          to provide real-time safety analysis and comprehensive ingredient
-          information, making it easier for health-conscious consumers to
-          understand what they're eating.
+          AroGuard is a comprehensive AI-powered health companion that combines
+          two powerful features: an intelligent food ingredient decoder and a
+          sophisticated diet planner with nutrition tracking. The application
+          helps users make informed decisions about food products by decoding
+          complex ingredient lists, E-numbers, and preservatives, while also
+          providing AI-powered nutrition estimation and meal planning
+          capabilities.
         </p>
         <p style="margin-top: 15px">
-          Built with modern web technologies including React and TypeScript,
-          AroGuard combines multiple data sources and AI capabilities to deliver
-          a seamless user experience with instant ingredient analysis, allergen
-          detection, and interactive visualizations.
+          Built with modern web technologies and powered by dual AI systems
+          (Groq and Perplexity), AroGuard delivers instant ingredient analysis,
+          real-time nutrition tracking with support for Indian cuisine, and
+          intelligent dietary insights. The application features an
+          offline-first architecture with IndexedDB storage, ensuring your data
+          is always accessible without requiring cloud synchronization or user
+          accounts.
         </p>
       </section>
 
       <!-- KEY ACHIEVEMENTS -->
       <section class="container">
         <h2>Key Features & Achievements</h2>
+
+        <h3>Ingredient Analysis System</h3>
         <ul>
           <li>
-            <strong>AI-Powered Analysis:</strong> Integrated Groq AI API for
-            intelligent ingredient decoding and safety classification
+            <strong>Dual AI Integration:</strong> Groq AI for fast processing
+            and Perplexity AI for advanced analysis with automatic API key
+            validation
           </li>
           <li>
-            <strong>Real-Time Safety Classification:</strong> Instant
-            categorization of ingredients into safe, caution, and harmful
-            categories
+            <strong>Smart Product Search:</strong> Search by product name or
+            barcode using Open Food Facts API with AI-powered fallback scraping
           </li>
           <li>
-            <strong>Interactive Visualizations:</strong> Dynamic pie charts
-            using Recharts library to display ingredient safety breakdown
+            <strong>Real-Time Safety Classification:</strong> Five-tier
+            categorization (Safest, Safe, Mild Concern, Moderate Concern, High
+            Concern)
           </li>
           <li>
-            <strong>Barcode Search:</strong> Quick product lookup using barcode
-            scanning functionality
+            <strong>Interactive Visualizations:</strong> Dynamic pie charts with
+            color-coded safety distribution and responsive design
           </li>
           <li>
-            <strong>Open Food Facts Integration:</strong> Access to
-            comprehensive product database with AI fallback scraping
+            <strong>Better Alternatives:</strong> AI-generated recommendations
+            for healthier product choices
           </li>
           <li>
-            <strong>Allergen Detection:</strong> Automatic identification of
+            <strong>NutrAi Chat Assistant:</strong> Intelligent chatbot for
+            ingredient-related questions with plain text output
+          </li>
+          <li>
+            <strong>Chat History Management:</strong> ChatGPT-like conversation
+            history with rename, delete, and search capabilities
+          </li>
+          <li>
+            <strong>PDF Export:</strong> Export chat conversations as formatted
+            PDFs with product information and timestamps
+          </li>
+          <li>
+            <strong>Allergen Detection:</strong> Automatic highlighting of
             common allergens in ingredient lists
           </li>
+        </ul>
+
+        <h3>Diet Planner & Nutrition Tracker</h3>
+        <ul>
           <li>
-            <strong>IndexedDB Caching:</strong> Offline-first architecture with
-            local data persistence for faster repeat searches
+            <strong>AI Nutrition Estimation:</strong> Intelligent calorie,
+            macro, and micronutrient calculation using Groq or Perplexity
           </li>
           <li>
-            <strong>AI Chatbot:</strong> Interactive assistant for answering
-            ingredient-related questions
+            <strong>Indian Food Support:</strong> Comprehensive understanding of
+            Indian dishes (Dal, Paneer, Roti, Sabzi, Idli, Dosa, etc.)
           </li>
           <li>
-            <strong>Type-Safe Development:</strong> Built with TypeScript for
-            enhanced code quality and maintainability
+            <strong>Flexible Meal Management:</strong> Support for Breakfast,
+            Lunch, Dinner, Snacks, Pre/Post-workout, and custom meals
+          </li>
+          <li>
+            <strong>Advanced Nutrition Tracking:</strong> Monitors 15+ nutrients
+            including vitamins (A, C, D, B12), minerals (Iron, Calcium,
+            Magnesium), and amino acids
+          </li>
+          <li>
+            <strong>Smart Nutrition Insights:</strong> AI-powered daily hints
+            detecting missing nutrients with gym-focused suggestions
+          </li>
+          <li>
+            <strong>Automatic Recalculation:</strong> Editing food name,
+            quantity, or unit triggers instant nutrition updates
+          </li>
+          <li>
+            <strong>Dynamic Charts:</strong> Toggle between Day (pie chart) and
+            Week (stacked bar chart) views with centered legends
+          </li>
+          <li>
+            <strong>Weekly Calendar:</strong> Visual overview with daily totals
+            and quick navigation
+          </li>
+          <li>
+            <strong>Quick Actions:</strong> Copy Today → Tomorrow, Repeat for
+            Week, Clear Day, Reset Week, Duplicate Meals
+          </li>
+          <li>
+            <strong>Weekly PDF Export:</strong> Download complete weekly diet
+            reports with daily breakdowns and macro totals
+          </li>
+          <li>
+            <strong>Quick Move:</strong> Move food items between meals with
+            one-click popover interface
+          </li>
+          <li>
+            <strong>Offline-First Storage:</strong> All data stored locally in
+            IndexedDB—no accounts or cloud sync required
           </li>
         </ul>
       </section>
 
-      <!-- IMAGE PLACEHOLDER 1 -->
+      <!-- IMAGE PLACEHOLDER 1 
       <div class="image-placeholder">
         <strong>📷 IMAGE PLACEHOLDER 1</strong><br />
         ADD IMAGE: images/aroguard-main-interface.jpg<br />
         Screenshot of main AroGuard interface<br />
-        Show: Search bar, product input, main dashboard<br />
+        Show: Search bar, product search results grid, navigation<br />
         Recommended size: 1920x1080px
       </div>
+      -->
+
+      <img
+        src="images/aroguard-main-interface.png"
+        alt="AroGuard main interface screenshot"
+        loading="lazy"
+      />
+      <figcaption class="image-caption">
+        Main AroGuard dashboard showcasing the product search interface where
+        users can search food items by name or barcode and access ingredient
+        analysis features.
+      </figcaption>
+
+      <!-- IMAGE PLACEHOLDER 2 
+      <div class="image-placeholder">
+        <strong>📷 IMAGE PLACEHOLDER 2</strong><br />
+        ADD IMAGE: images/aroguard-ingredient-analysis.jpg<br />
+        Screenshot of ingredient analysis view<br />
+        Show: Raw ingredients panel (left) and decoded ingredients panel
+        (right)<br />
+        Recommended size: 1920x1080px
+      </div>
+      -->
+      <img
+        src="images/aroguard-ingredient-analysis.png"
+        alt="AroGuard ingredient analysis screenshot"
+        loading="lazy"
+      />
+      <figcaption class="image-caption">
+        Ingredient analysis view displaying raw label ingredients on the left
+        and AI-decoded ingredients on the right with roles, safety levels, and
+        allergen highlighting.
+      </figcaption>
 
       <!-- TECHNICAL ARCHITECTURE -->
       <section class="container">
@@ -504,23 +600,39 @@
             <li>
               React 18 with TypeScript for type-safe component development
             </li>
-            <li>Tailwind CSS for responsive and modern UI design</li>
+            <li>Tailwind CSS for responsive utility-first styling</li>
+            <li>shadcn/ui component library for consistent UI elements</li>
             <li>Recharts library for interactive data visualizations</li>
-            <li>
-              Component-based architecture for reusability and maintainability
-            </li>
+            <li>Modular component architecture with separation of concerns</li>
+            <li>Custom hooks for state management and data fetching</li>
           </ul>
         </div>
 
         <div class="subsection">
-          <strong>AI Integration Layer</strong>
+          <strong>Dual AI Integration Layer</strong>
           <ul>
             <li>
-              Groq AI API for natural language processing of ingredient data
+              Groq AI (llama-3.3-70b-versatile) for fast ingredient parsing and
+              nutrition estimation
             </li>
-            <li>Intelligent ingredient classification algorithm</li>
-            <li>Context-aware safety analysis based on health standards</li>
-            <li>AI chatbot for interactive user queries</li>
+            <li>
+              Perplexity AI (sonar-pro) for advanced analysis and nutrition
+              insights
+            </li>
+            <li>
+              Automatic API key validation with real-time feedback (✓ green
+              checkmark or ✗ red X)
+            </li>
+            <li>
+              Smart fallback: Automatically switches to Groq if Perplexity
+              credits are exhausted
+            </li>
+            <li>
+              Model selection rules based on API key availability and validity
+            </li>
+            <li>
+              Context-aware prompts for accurate ingredient classification
+            </li>
           </ul>
         </div>
 
@@ -528,173 +640,583 @@
           <strong>Data Layer</strong>
           <ul>
             <li>
-              Open Food Facts API for comprehensive product database access
+              Open Food Facts API for comprehensive product database (search and
+              barcode endpoints)
             </li>
-            <li>AI-powered web scraping as fallback data source</li>
-            <li>IndexedDB for client-side caching and offline functionality</li>
-            <li>Real-time data synchronization between sources</li>
+            <li>
+              AI-powered web scraping as fallback when OFF data is missing or
+              incomplete
+            </li>
+            <li>
+              IndexedDB with multiple stores for offline-first functionality
+            </li>
+            <li>
+              Separate databases: aroguard_db (main) and aroguard_diet_db (diet
+              planner)
+            </li>
+            <li>
+              Real-time data synchronization and automatic cache management
+            </li>
+            <li>No cloud storage—all data stays on device for privacy</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>Nutrition Estimation System</strong>
+          <ul>
+            <li>
+              AI-powered estimation for calories, protein, carbs, fats, fiber,
+              sugar, sodium
+            </li>
+            <li>Micronutrient tracking: Vitamins A, C, D, B12</li>
+            <li>Mineral tracking: Iron, Calcium, Magnesium</li>
+            <li>Amino acid summaries for protein quality assessment</li>
+            <li>
+              Support for multiple units: grams, ml, pieces, scoop, cup, tbsp
+            </li>
+            <li>
+              Intelligent understanding of portion sizes for Indian cuisine
+            </li>
           </ul>
         </div>
       </section>
 
-      <!-- IMAGE PLACEHOLDER 2 -->
+      <!-- IMAGE PLACEHOLDER 3 
       <div class="image-placeholder">
-        <strong>📷 IMAGE PLACEHOLDER 2</strong><br />
-        ADD IMAGE: images/aroguard-analysis-results.jpg<br />
-        Screenshot of ingredient analysis results<br />
-        Show: Detailed ingredient breakdown, safety classifications<br />
-        Recommended size: 1920x1080px
+        <strong>📷 IMAGE PLACEHOLDER 3</strong><br />
+        ADD IMAGE: images/aroguard-safety-chart.jpg<br />
+        Screenshot of Recharts pie chart visualization<br />
+        Show: Interactive safety distribution chart with color-coded
+        categories<br />
+        Recommended size: 1200x800px
       </div>
+      -->
+      <img
+        src="images/aroguard-safety-chart.png"
+        alt="Screenshot of Recharts pie chart visualization"
+        loading="lazy"
+      />
+      <figcaption class="image-caption">
+        Ingredient safety overview chart visualizing the distribution of
+        ingredients across safety categories such as Safest, Safe, and Mild
+        Concern.
+      </figcaption>
+
+      <!-- IMAGE PLACEHOLDER 4
+      <div class="image-placeholder">
+        <strong>📷 IMAGE PLACEHOLDER 4</strong><br />
+        ADD IMAGE: images/aroguard-nutr-ai-chat.jpg<br />
+        Screenshot of NutrAi chatbot interface<br />
+        Show: Chat conversation with product-specific ingredient questions<br />
+        Recommended size: 1200x800px
+      </div>
+      -->
+      <img
+        src="images/aroguard-nutr-ai-chat.png"
+        alt="Screenshot of NutrAi chatbot interface"
+        loading="lazy"
+      />
+      <figcaption class="image-caption">
+        NutrAi chatbot interface where users can ask product-specific questions
+        and receive plain-language explanations of E-numbers and additives.
+      </figcaption>
 
       <!-- CORE FEATURES -->
       <section class="container">
-        <h2>Core Features</h2>
+        <h2>Core Features Breakdown</h2>
 
         <div class="subsection">
           <strong>Ingredient Decoder</strong>
           <ul>
-            <li>Comprehensive E-number database with detailed explanations</li>
-            <li>Preservative identification and safety information</li>
             <li>
-              Additive classification (colorants, sweeteners, stabilizers, etc.)
+              Comprehensive E-number database with detailed health explanations
+            </li>
+            <li>
+              Preservative identification (E200-E299) with safety information
+            </li>
+            <li>
+              Additive classification: colorants, sweeteners, stabilizers,
+              emulsifiers
             </li>
             <li>Natural vs synthetic ingredient differentiation</li>
+            <li>Chemical name simplification for consumer understanding</li>
+            <li>Raw ingredient display with allergen highlighting</li>
           </ul>
         </div>
 
         <div class="subsection">
-          <strong>Safety Classification System</strong>
+          <strong>Safety Classification System (5 Categories)</strong>
           <ul>
             <li>
-              <strong>Safe:</strong> Generally recognized as safe ingredients
+              <strong>Safest (#008A2E):</strong> Generally recognized as safe
               with no known health concerns
             </li>
             <li>
-              <strong>Caution:</strong> Ingredients that may cause reactions in
+              <strong>Safe (#43D17A):</strong> Safe for most people with minimal
+              processing
+            </li>
+            <li>
+              <strong>Mild Concern (#FFC247):</strong> May cause reactions in
               sensitive individuals
             </li>
             <li>
-              <strong>Harmful:</strong> Ingredients with potential health risks
-              or regulatory concerns
+              <strong>Moderate Concern (#FF8A00):</strong> Limited consumption
+              recommended
             </li>
-            <li>Visual color-coding for quick identification</li>
+            <li>
+              <strong>High Concern (#D93A3A):</strong> Potential health risks or
+              regulatory concerns
+            </li>
+            <li>
+              Visual pie chart with percentage distribution and responsive
+              design
+            </li>
           </ul>
         </div>
 
         <div class="subsection">
-          <strong>Allergen Detection</strong>
+          <strong>Better Alternatives Panel</strong>
           <ul>
             <li>
-              Automatic detection of 14 major allergens (milk, eggs, nuts, soy,
-              etc.)
+              AI-generated suggestions for 2-4 healthier product alternatives
             </li>
-            <li>Cross-contamination warnings</li>
-            <li>Highlighted allergen display in ingredient lists</li>
-            <li>Customizable allergen preferences</li>
+            <li>
+              Explains why each alternative is better (fewer additives, natural
+              ingredients)
+            </li>
+            <li>No medical claims—focuses on ingredient quality</li>
+            <li>Displayed between safety chart and chat interface</li>
+            <li>Uses currently selected AI provider (Groq or Perplexity)</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>NutrAi Chat Assistant</strong>
+          <ul>
+            <li>
+              Product-specific ingredient expert that only answers about current
+              product
+            </li>
+            <li>
+              Plain text output (no markdown formatting for cleaner display)
+            </li>
+            <li>
+              Explains E-numbers, chemical names, and potential health effects
+            </li>
+            <li>Never provides medical or legal advice</li>
+            <li>References actual parsed ingredient data from analysis</li>
+            <li>Can suggest better alternatives when asked</li>
+            <li>Uses currently selected model (Groq or Perplexity)</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>Chat History System</strong>
+          <ul>
+            <li>ChatGPT-like conversation history on homepage</li>
+            <li>Shows recent conversations below search bar</li>
+            <li>Displays product name, timestamp, and first message preview</li>
+            <li>Click to reopen and continue conversations</li>
+            <li>Rename chats for better organization</li>
+            <li>Delete individual chats or clear all at once</li>
+            <li>Stored persistently in IndexedDB conversations store</li>
           </ul>
         </div>
       </section>
 
-      <!-- IMAGE PLACEHOLDER 3 -->
+      <!-- IMAGE PLACEHOLDER 5 
       <div class="image-placeholder">
-        <strong>📷 IMAGE PLACEHOLDER 3</strong><br />
-        ADD IMAGE: images/aroguard-pie-chart.jpg<br />
-        Screenshot of Recharts pie chart visualization<br />
-        Show: Interactive pie chart with ingredient safety distribution<br />
+        <strong>📷 IMAGE PLACEHOLDER 5</strong><br />
+        ADD IMAGE: images/aroguard-better-alternatives.jpg<br />
+        Screenshot of Better Alternatives panel<br />
+        Show: AI-generated healthier product recommendations<br />
         Recommended size: 1200x800px
       </div>
+      -->
+      <img
+        src="images/aroguard-better-alternatives.png"
+        alt="Screenshot of Better Alternatives panel"
+        loading="lazy"
+      />
+      <figcaption class="image-caption">
+        Better Alternatives panel presenting AI-suggested healthier product
+        options with explanations focused on cleaner ingredients and fewer
+        additives.
+      </figcaption>
+
+      <!-- DIET PLANNER FEATURES -->
+      <section class="container">
+        <h2>Diet Planner Features</h2>
+
+        <div class="subsection">
+          <strong>Food Logging & Management</strong>
+          <ul>
+            <li>Add foods by name with quantity and flexible units</li>
+            <li>Supported units: grams, ml, pieces, scoop, cup, tbsp</li>
+            <li>
+              Meal categories: Breakfast, Lunch, Dinner, Snacks, Pre-workout,
+              Post-workout, Custom
+            </li>
+            <li>Edit food entries with automatic nutrition recalculation</li>
+            <li>Delete individual items or clear entire meals</li>
+            <li>
+              Quick Move feature: Move items between meals via one-click popover
+            </li>
+            <li>Duplicate selected meal to next day</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>AI Nutrition Estimation</strong>
+          <ul>
+            <li>Core macros: Calories, Protein, Carbohydrates, Fats</li>
+            <li>Additional nutrients: Fiber, Sugar, Sodium</li>
+            <li>Vitamins: A, C, D, B12</li>
+            <li>Minerals: Iron, Calcium, Magnesium</li>
+            <li>Amino acid profile summaries</li>
+            <li>
+              Confidence indicator: Subtle "AI-based nutrition estimate" label
+            </li>
+            <li>
+              Automatic recalculation when food name, quantity, or unit changes
+            </li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>Indian Food Support</strong>
+          <ul>
+            <li>
+              Understands traditional Indian dishes: Dal, Paneer Tikka, Roti,
+              Sabzi
+            </li>
+            <li>South Indian cuisine: Idli, Dosa, Vada, Sambar, Upma</li>
+            <li>Snacks: Samosa, Pakora, Bhaji, Kachori</li>
+            <li>Sweets: Gulab Jamun, Jalebi, Barfi, Ladoo</li>
+            <li>Regional variations recognized for accurate nutrition</li>
+            <li>Portion size intelligence for typical Indian servings</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>Smart Nutrition Insights (Perplexity AI)</strong>
+          <ul>
+            <li>
+              AI-powered daily nutrition hints analyzing complete day intake
+            </li>
+            <li>
+              Missing nutrient detection with specific food recommendations
+            </li>
+            <li>Positive feedback on good dietary choices</li>
+            <li>
+              Gym-focused suggestions for muscle recovery and protein quality
+            </li>
+            <li>Considers both macros and micros for comprehensive advice</li>
+            <li>Updates dynamically as you add or modify foods</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>Visualization & Analytics</strong>
+          <ul>
+            <li>
+              Toggle between Day View (pie chart) and Week View (stacked bar
+              chart)
+            </li>
+            <li>Centered legends for better readability</li>
+            <li>Color-coded nutrients with consistent theme support</li>
+            <li>Daily nutrition summary cards with macro breakdowns</li>
+            <li>Weekly calendar with daily total display</li>
+            <li>Visual progress tracking across the week</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>Quick Actions</strong>
+          <ul>
+            <li>
+              Copy Today → Tomorrow: Duplicate entire day's meals to next day
+            </li>
+            <li>
+              Repeat Today for Whole Week: Apply today's plan to all remaining
+              days
+            </li>
+            <li>Clear Day: Remove all meals for selected date</li>
+            <li>Reset Week: Clear all data for current week</li>
+            <li>Duplicate Selected Meal: Copy specific meal to next day</li>
+            <li>
+              Export Weekly Diet as PDF: Download complete report with
+              breakdowns
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- IMAGE PLACEHOLDER 6 
+      <div class="image-placeholder">
+        <strong>📷 IMAGE PLACEHOLDER 6</strong><br />
+        ADD IMAGE: images/aroguard-diet-planner-interface.jpg<br />
+        Screenshot of Diet Planner main interface<br />
+        Show: Date selector, food input form, meals list with nutrition data<br />
+        Recommended size: 1920x1080px
+      </div>
+      -->
+
+      <img
+        src="images/aroguard-diet-planner-interface.png"
+        alt="Screenshot of Diet Planner main interface"
+        loading="lazy"
+      />
+      <figcaption class="image-caption">
+        Diet Planner main interface allowing users to log meals, track daily
+        nutrition, and view calories and macros for a selected date.
+      </figcaption>
+
+      <!-- IMAGE PLACEHOLDER 7
+      <div class="image-placeholder">
+        <strong>📷 IMAGE PLACEHOLDER 7</strong><br />
+        ADD IMAGE: images/aroguard-nutrition-charts.jpg<br />
+        Screenshot of nutrition charts<br />
+        Show: Day view pie chart and Week view stacked bar chart toggle<br />
+        Recommended size: 1920x1080px
+      </div>
+       -->
+
+      <img
+        src="images/aroguard-nutrition-charts.png"
+        alt="Screenshot of nutrition charts"
+        loading="lazy"
+      />
+      <figcaption class="image-caption">
+        Nutrition charts section showing a toggle between daily macro
+        distribution (pie chart) and weekly nutrition trends (stacked bar
+        chart).
+      </figcaption>
+
+      <!-- IMAGE PLACEHOLDER 8 
+      <div class="image-placeholder">
+        <strong>📷 IMAGE PLACEHOLDER 8</strong><br />
+        ADD IMAGE: images/aroguard-weekly-calendar.jpg<br />
+        Screenshot of weekly calendar view<br />
+        Show: 7-day calendar grid with daily nutrition totals<br />
+        Recommended size: 1200x800px
+      </div>
+      -->
+
+      <img
+        src="images/aroguard-weekly-calendar.png"
+        alt="Screenshot of weekly calendar view"
+        loading="lazy"
+      />
+      <figcaption class="image-caption">
+        Weekly calendar view providing a seven-day overview of total daily
+        calorie intake with quick navigation between days.
+      </figcaption>
 
       <!-- TECHNICAL CHALLENGES -->
       <section class="container">
         <h2>Technical Challenges & Solutions</h2>
 
         <div class="challenge-box">
-          <strong>Challenge 1: Reliable Data Sourcing</strong>
+          <strong>Challenge 1: Dual AI System with Automatic Fallback</strong>
           <p>
-            Food product databases can be incomplete or outdated. Relying solely
-            on Open Food Facts API would result in missing data for many
-            products, especially regional or newly launched items.
+            Managing two different AI providers (Groq and Perplexity) with
+            different rate limits, credit systems, and response formats while
+            ensuring seamless user experience. Users shouldn't face errors when
+            Perplexity credits run out.
           </p>
           <p style="margin-top: 10px">
-            <strong>Solution:</strong> Implemented a hybrid data strategy
-            combining Open Food Facts API as the primary source with AI-powered
-            web scraping as a fallback. The Groq AI model intelligently extracts
-            ingredient information from product websites when API data is
-            unavailable, ensuring comprehensive coverage.
+            <strong>Solution:</strong> Implemented comprehensive API key
+            validation system with real-time feedback (green checkmarks for
+            valid, red X for invalid). Created smart fallback logic: if
+            Perplexity returns 402 (credits exhausted), automatically switch to
+            Groq. Model selection rules dynamically adjust based on API key
+            availability—if Perplexity key missing or invalid, only Groq is
+            offered.
           </p>
         </div>
 
         <div class="challenge-box">
-          <strong>Challenge 2: Real-Time AI Processing Performance</strong>
+          <strong
+            >Challenge 2: Reliable Product Data with OFF + Groq Pipeline</strong
+          >
           <p>
-            Processing ingredient lists through AI models can introduce latency,
-            creating a poor user experience. Users expect instant results when
-            analyzing products.
+            Open Food Facts database is community-driven and often incomplete.
+            Many products lack ingredient text, making it impossible to perform
+            analysis. Simply showing "no data" would significantly limit the
+            app's usefulness.
           </p>
           <p style="margin-top: 10px">
-            <strong>Solution:</strong> Implemented IndexedDB caching to store
-            previously analyzed products locally. Combined with the fast
-            response times of Groq AI (optimized for speed), the application
-            delivers near-instant results for repeat searches while maintaining
-            quick first-time analysis.
+            <strong>Solution:</strong> Designed a robust fallback pipeline: (1)
+            Query Open Food Facts for ingredients_text, (2) If
+            missing/empty/null → trigger Groq scraping, (3) AI extracts
+            ingredients from product HTML/description, (4) Return as JSON with
+            error handling. This ensures comprehensive coverage while
+            prioritizing official data when available.
           </p>
         </div>
 
         <div class="challenge-box">
-          <strong>Challenge 3: Complex Ingredient Classification</strong>
+          <strong
+            >Challenge 3: AI Nutrition Estimation with Indian Food
+            Support</strong
+          >
           <p>
-            Food ingredients can have complex names, E-numbers, and varying
-            safety profiles depending on concentration and individual
-            sensitivities. Creating accurate classifications requires
-            understanding nuanced health data.
+            Standard nutrition databases don't accurately capture Indian
+            cuisine, which has diverse regional variations and cooking methods.
+            Generic "Dal" estimation wouldn't account for Dal Tadka vs Dal
+            Makhani differences.
           </p>
           <p style="margin-top: 10px">
-            <strong>Solution:</strong> Leveraged Groq AI's natural language
-            understanding to analyze ingredients in context. The AI considers
-            multiple factors including regulatory status, common allergies,
-            concentration levels, and recent research to provide nuanced safety
-            classifications rather than binary safe/unsafe ratings.
+            <strong>Solution:</strong> Leveraged Groq and Perplexity's advanced
+            language understanding to create context-aware nutrition estimation.
+            AI considers cooking methods, regional variations, and typical
+            portion sizes. Trained on diverse Indian food descriptions to
+            understand nuances like "1 roti" vs "1 paratha" or "Dal Fry" vs "Dal
+            Makhani." Provides amino acid summaries for protein quality
+            assessment.
+          </p>
+        </div>
+
+        <div class="challenge-box">
+          <strong>Challenge 4: Automatic Nutrition Recalculation</strong>
+          <p>
+            When users edit food entries (changing quantity from 100g to 150g or
+            unit from "pieces" to "cups"), nutrition values become outdated.
+            Requiring manual recalculation would create poor UX, but automatic
+            API calls could be expensive.
+          </p>
+          <p style="margin-top: 10px">
+            <strong>Solution:</strong> Implemented smart change detection that
+            triggers recalculation only when name, quantity, or unit changes—not
+            on every keystroke. Uses efficient API calls to re-estimate
+            nutrition and updates IndexedDB immediately. User sees updated
+            values instantly with minimal API usage. Maintains confidence
+            indicator showing data is "AI-based estimate."
+          </p>
+        </div>
+
+        <div class="challenge-box">
+          <strong
+            >Challenge 5: Complex State Management Across Multiple IndexedDB
+            Stores</strong
+          >
+          <p>
+            Diet Planner requires managing daily logs (keyed by date), custom
+            meals, chat history, parsed ingredients, and settings across two
+            separate IndexedDB databases. Ensuring data consistency and avoiding
+            race conditions was critical.
+          </p>
+          <p style="margin-top: 10px">
+            <strong>Solution:</strong> Created separate databases: aroguard_db
+            (conversations, parsedIngredients, settings) and aroguard_diet_db
+            (dayLogs, customMeals). Used promise-based IndexedDB wrappers with
+            proper error handling. Implemented atomic operations for Quick
+            Actions (Copy Today → Tomorrow, Repeat for Week) to prevent partial
+            updates. Weekly PDF export aggregates data efficiently across
+            multiple dates.
+          </p>
+        </div>
+
+        <div class="challenge-box">
+          <strong>Challenge 6: Plain Text Output from AI Models</strong>
+          <p>
+            AI models like GPT and Claude naturally produce markdown formatting
+            (\*, \*\*, bullets) which creates rendering issues and visual noise.
+            NutrAi chat needed clean, readable text without stray characters.
+          </p>
+          <p style="margin-top: 10px">
+            <strong>Solution:</strong> Implemented textUtils.ts with
+            sanitization functions that strip markdown while preserving
+            structure. Explicitly instructs AI in system prompts to use plain
+            text only with simple numbering (1. 2. 3.) for lists. Created
+            specialized prompt engineering to ensure both Groq and Perplexity
+            output clean text consistently.
           </p>
         </div>
       </section>
 
-      <!-- IMAGE PLACEHOLDER 4 -->
+      <!-- IMAGE PLACEHOLDER 9 
       <div class="image-placeholder">
-        <strong>📷 IMAGE PLACEHOLDER 4</strong><br />
-        ADD IMAGE: images/aroguard-chatbot.jpg<br />
-        Screenshot of AI chatbot interface<br />
-        Show: Chat interface with ingredient-related Q&A<br />
+        <strong>📷 IMAGE PLACEHOLDER 9</strong><br />
+        ADD IMAGE: images/aroguard-nutrition-insights.jpg<br />
+        Screenshot of AI nutrition insights<br />
+        Show: Perplexity-powered daily hints with missing nutrient detection<br />
         Recommended size: 1200x800px
       </div>
+      -->
+
+      <img
+        src="images/aroguard-nutrition-insights.png"
+        alt="Screenshot of AI nutrition insights"
+        loading="lazy"
+      />
+      <figcaption class="image-caption">
+        AI-powered nutrition insights panel highlighting strengths, gaps, and
+        gym-focused dietary suggestions based on the user’s daily intake.
+      </figcaption>
 
       <!-- REAL-WORLD IMPACT -->
       <section class="container">
         <h2>Real-World Impact & Use Cases</h2>
+
+        <h3>Ingredient Analysis Use Cases</h3>
         <ul>
           <li>
-            <strong>Health-Conscious Consumers:</strong> Helps individuals make
-            informed decisions about processed foods and avoid harmful additives
+            <strong>Health-Conscious Consumers:</strong> Make informed decisions
+            about processed foods and avoid harmful additives
           </li>
           <li>
-            <strong>Allergy Management:</strong> Critical tool for people with
-            food allergies to quickly identify dangerous ingredients
+            <strong>Allergy Management:</strong> Critical tool for identifying
+            dangerous ingredients quickly
           </li>
           <li>
-            <strong>Parents:</strong> Enables parents to check children's snacks
-            and meals for harmful preservatives and additives
+            <strong>Parents:</strong> Check children's snacks for harmful
+            preservatives and E-numbers
           </li>
           <li>
-            <strong>Dietary Restrictions:</strong> Supports vegan, vegetarian,
-            and religious dietary requirements by identifying animal-derived
-            ingredients
+            <strong>Dietary Restrictions:</strong> Support vegan, vegetarian,
+            and religious dietary requirements
           </li>
           <li>
-            <strong>Nutritional Awareness:</strong> Educates users about common
-            food additives and their potential health effects
+            <strong>Nutritional Education:</strong> Learn about common additives
+            and health effects
           </li>
           <li>
-            <strong>Shopping Assistant:</strong> Quick in-store analysis through
-            barcode scanning for instant product evaluation
+            <strong>Shopping Assistant:</strong> In-store product evaluation via
+            barcode scanning
+          </li>
+        </ul>
+
+        <h3>Diet Planner Use Cases</h3>
+        <ul>
+          <li>
+            <strong>Fitness Enthusiasts:</strong> Track macros and protein for
+            muscle building with gym-focused AI suggestions
+          </li>
+          <li>
+            <strong>Weight Management:</strong> Monitor daily calorie intake and
+            maintain consistent eating patterns
+          </li>
+          <li>
+            <strong>Micronutrient Tracking:</strong> Ensure adequate vitamin and
+            mineral intake for overall health
+          </li>
+          <li>
+            <strong>Indian Cuisine Tracking:</strong> Accurately log traditional
+            meals without generic database limitations
+          </li>
+          <li>
+            <strong>Meal Planning:</strong> Use Quick Actions to plan entire
+            weeks efficiently
+          </li>
+          <li>
+            <strong>Health Reports:</strong> Export weekly PDFs for sharing with
+            nutritionists or personal tracking
+          </li>
+          <li>
+            <strong>No-Account Privacy:</strong> All data stays on
+            device—perfect for privacy-conscious users
           </li>
         </ul>
       </section>
@@ -710,47 +1232,148 @@
               Functional components with React Hooks (useState, useEffect,
               useContext)
             </li>
-            <li>Custom hooks for API calls and data management</li>
+            <li>Custom hooks for API calls (useGroqApi, usePerplexityApi)</li>
             <li>
-              Type-safe props and state management with TypeScript interfaces
+              Type-safe props and state with TypeScript interfaces and types
             </li>
             <li>Error boundaries for graceful error handling</li>
+            <li>Component structure: /components/diet, /lib, /pages</li>
+            <li>Strict type definitions in dietTypes.ts and types.ts</li>
           </ul>
         </div>
 
         <div class="subsection">
-          <strong>Groq AI Integration</strong>
+          <strong>Groq & Perplexity AI Integration</strong>
           <ul>
-            <li>RESTful API calls to Groq endpoints for ingredient analysis</li>
             <li>
-              Structured prompt engineering for accurate ingredient
-              classification
+              groqApi.ts: Ingredient parsing, nutrition estimation, chat
+              responses
             </li>
-            <li>Response parsing and validation</li>
-            <li>Token optimization for cost-effective API usage</li>
+            <li>
+              perplexityApi.ts: Advanced analysis, nutrition insights,
+              alternative recommendations
+            </li>
+            <li>
+              nutritionAi.ts: Unified nutrition estimation interface with Indian
+              food support
+            </li>
+            <li>API key validation endpoints with real-time feedback</li>
+            <li>Structured prompt engineering for accurate classifications</li>
+            <li>Response parsing with JSON validation</li>
+            <li>Automatic credit exhaustion detection and fallback</li>
           </ul>
         </div>
 
         <div class="subsection">
-          <strong>Tailwind CSS Styling</strong>
+          <strong>Open Food Facts Integration</strong>
           <ul>
-            <li>Utility-first CSS approach for rapid UI development</li>
+            <li>offApi.ts: Text search and barcode search endpoints</li>
+            <li>Fresh data fetching for every query (no stale results)</li>
+            <li>Product grid resets on each search</li>
+            <li>AI scraping fallback when ingredients_text is missing</li>
+            <li>Handles empty results gracefully with "No products found"</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>IndexedDB Storage Architecture</strong>
+          <ul>
+            <li>
+              db.ts: Main database (conversations, parsedIngredients, settings)
+            </li>
+            <li>dietDb.ts: Diet database (dayLogs, customMeals)</li>
+            <li>Promise-based operations with proper error handling</li>
+            <li>
+              Date-keyed storage (YYYY-MM-DD) for efficient daily log access
+            </li>
+            <li>
+              Atomic operations for Quick Actions to prevent data corruption
+            </li>
+            <li>No cloud sync—complete offline functionality</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>Tailwind CSS + shadcn/ui Styling</strong>
+          <ul>
+            <li>Utility-first CSS for rapid UI development</li>
             <li>Responsive design with mobile-first methodology</li>
             <li>Custom color schemes for safety classifications</li>
-            <li>Dark mode support for better user experience</li>
+            <li>Dark mode support with theme persistence</li>
+            <li>shadcn/ui components: Alert, Dialog, Card, Button, Popover</li>
+            <li>
+              Consistent design system across Ingredient Analysis and Diet
+              Planner
+            </li>
           </ul>
         </div>
 
         <div class="subsection">
-          <strong>IndexedDB Caching Strategy</strong>
+          <strong>Recharts Visualization</strong>
           <ul>
-            <li>Client-side database for storing analyzed products</li>
-            <li>Automatic cache invalidation after 30 days</li>
-            <li>Fallback to API when cache is unavailable</li>
-            <li>Offline-first architecture for improved performance</li>
+            <li>Pie chart for ingredient safety distribution</li>
+            <li>Pie chart for daily nutrition macros</li>
+            <li>Stacked bar chart for weekly nutrition overview</li>
+            <li>Centered legends for better readability</li>
+            <li>Responsive sizing for all screen sizes</li>
+            <li>Color-coded categories with theme support</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>PDF Export (jsPDF)</strong>
+          <ul>
+            <li>pdfExport.ts: Chat conversation export with formatting</li>
+            <li>dietPdfExport.ts: Weekly diet report generation</li>
+            <li>Client-side generation (no server required)</li>
+            <li>
+              Includes product names, timestamps, and full conversation history
+            </li>
+            <li>Weekly reports show daily breakdowns and macro totals</li>
+            <li>AroGuard branding footer</li>
           </ul>
         </div>
       </section>
+
+      <!-- IMAGE PLACEHOLDER 10
+      <div class="image-placeholder">
+        <strong>📷 IMAGE PLACEHOLDER 10</strong><br />
+        ADD IMAGE: images/aroguard-settings-dialog.jpg<br />
+        Screenshot of Settings modal<br />
+        Show: API key inputs with validation indicators (✓ or ✗)<br />
+        Recommended size: 1200x800px
+      </div>
+       -->
+
+      <img
+        src="images/aroguard-settings-dialog.png"
+        alt="Screenshot of Settings modal"
+        loading="lazy"
+      />
+      <figcaption class="image-caption">
+        Settings dialog where users configure AI providers, validate API keys,
+        toggle risk indicators, and export chat or ingredient data.
+      </figcaption>
+
+      <!-- IMAGE PLACEHOLDER 11 
+      <div class="image-placeholder">
+        <strong>📷 IMAGE PLACEHOLDER 11</strong><br />
+        ADD IMAGE: images/aroguard-chat-history.jpg<br />
+        Screenshot of Chat History panel<br />
+        Show: Recent conversations with product names and timestamps<br />
+        Recommended size: 1200x800px
+      </div>
+      -->
+
+      <img
+        src="images/aroguard-chat-history.png"
+        alt="Screenshot of Chat History panel"
+        loading="lazy"
+      />
+      <figcaption class="image-caption">
+        Chat history panel displaying past product analyses with timestamps,
+        enabling users to reopen, manage, or delete previous conversations.
+      </figcaption>
 
       <!-- TECHNOLOGIES USED -->
       <section class="container">
@@ -758,41 +1381,233 @@
         <ul>
           <li><strong>Frontend Framework:</strong> React 18 with TypeScript</li>
           <li>
-            <strong>Styling:</strong> Tailwind CSS for utility-first styling
+            <strong>Styling:</strong> Tailwind CSS with utility-first approach
           </li>
           <li>
-            <strong>AI Integration:</strong> Groq AI API for ingredient analysis
+            <strong>UI Components:</strong> shadcn/ui for consistent design
+            system
           </li>
           <li>
-            <strong>Data Visualization:</strong> Recharts for interactive charts
+            <strong>AI Integration:</strong> Groq AI (llama-3.3-70b-versatile)
+            and Perplexity AI (sonar-pro)
           </li>
           <li>
-            <strong>External APIs:</strong> Open Food Facts API for product data
+            <strong>Data Visualization:</strong> Recharts for interactive pie
+            and bar charts
           </li>
           <li>
-            <strong>Local Storage:</strong> IndexedDB for client-side caching
+            <strong>External APIs:</strong> Open Food Facts API for product
+            database
           </li>
           <li>
-            <strong>Build Tools:</strong> Vite for fast development and building
+            <strong>Local Storage:</strong> IndexedDB for offline-first data
+            persistence
+          </li>
+          <li>
+            <strong>PDF Generation:</strong> jsPDF for client-side PDF export
+          </li>
+          <li>
+            <strong>Build Tools:</strong> Vite for fast development and
+            optimized builds
           </li>
           <li>
             <strong>Version Control:</strong> Git/GitHub for code management
           </li>
+          <li>
+            <strong>Deployment:</strong> Vercel/Netlify for static site hosting
+          </li>
         </ul>
+      </section>
+
+      <!-- PROJECT STRUCTURE -->
+      <section class="container">
+        <h2>Project Structure</h2>
+        <div class="subsection">
+          <strong>Component Organization</strong>
+          <ul>
+            <li>
+              <strong>/components:</strong> Reusable UI components for
+              Ingredient Analysis
+            </li>
+            <li>
+              <strong>/components/diet:</strong> Diet Planner specific
+              components (DateSelector, FoodInputForm, MealsList,
+              NutritionChart, NutritionSummary, NutritionInsights, WeeklyView,
+              QuickActions)
+            </li>
+            <li>
+              <strong>/lib:</strong> Utility functions and API integrations
+              (db.ts, dietDb.ts, groqApi.ts, perplexityApi.ts, nutritionAi.ts,
+              offApi.ts, pdfExport.ts, dietPdfExport.ts)
+            </li>
+            <li>
+              <strong>/pages:</strong> Main page routes (Index.tsx,
+              DietPlanner.tsx, NotFound.tsx)
+            </li>
+            <li>
+              <strong>/types:</strong> TypeScript definitions (types.ts,
+              dietTypes.ts)
+            </li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>IndexedDB Schema</strong>
+          <ul>
+            <li><strong>aroguard_db:</strong> Main database</li>
+            <li>
+              &nbsp;&nbsp;&nbsp;• conversations: Chat history with productId,
+              messages, timestamps
+            </li>
+            <li>
+              &nbsp;&nbsp;&nbsp;• parsedIngredients: Cached ingredient analysis
+              results
+            </li>
+            <li>&nbsp;&nbsp;&nbsp;• settings: App preferences and API keys</li>
+            <li><strong>aroguard_diet_db:</strong> Diet Planner database</li>
+            <li>
+              &nbsp;&nbsp;&nbsp;• dayLogs: Daily food entries keyed by date
+              (YYYY-MM-DD)
+            </li>
+            <li>&nbsp;&nbsp;&nbsp;• customMeals: User-defined meal types</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- API WORKFLOW -->
+      <section class="container">
+        <h2>API Workflow & Integration</h2>
+
+        <div class="subsection">
+          <strong>OFF + Groq Fallback Pipeline</strong>
+          <ul>
+            <li>1. User selects a product</li>
+            <li>2. Attempt to get ingredients_text from Open Food Facts</li>
+            <li>3. If missing/empty/null → Trigger Groq fallback scraping</li>
+            <li>4. Display raw ingredients in left panel</li>
+            <li>5. Parse ingredients with AI (Groq or Perplexity)</li>
+            <li>6. Display decoded ingredients in right panel</li>
+            <li>7. Generate safety pie chart with 5 categories</li>
+            <li>8. Show Better Alternatives panel</li>
+            <li>9. Enable NutrAi chat for product-specific questions</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>Model Selection Rules</strong>
+          <ul>
+            <li>If Perplexity key missing → Only use Groq</li>
+            <li>If Perplexity key invalid → Disable Perplexity, show error</li>
+            <li>
+              If Perplexity key valid → Allow switching between Groq &
+              Perplexity
+            </li>
+            <li>
+              If Perplexity credits exhausted (402) → Automatically fallback to
+              Groq
+            </li>
+            <li>
+              Both ingredient parsing AND NutrAi chat use currently selected
+              model
+            </li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <strong>API Key Validation Process</strong>
+          <ul>
+            <li>
+              Groq: Test request to chat/completions with
+              llama-3.3-70b-versatile
+            </li>
+            <li>Perplexity: Test request to chat/completions with sonar-pro</li>
+            <li>200 response = valid (✓ green checkmark)</li>
+            <li>401/403 response = invalid (✗ red X with error message)</li>
+            <li>402 for Perplexity = credits exhausted</li>
+            <li>Spinner shown while validating</li>
+            <li>Error messages displayed below input field</li>
+          </ul>
+        </div>
       </section>
 
       <!-- FUTURE ENHANCEMENTS -->
       <section class="container">
         <h2>Future Enhancements</h2>
+
+        <h3>Ingredient Analysis Enhancements</h3>
         <ul>
-          <li>Mobile app development for iOS and Android platforms</li>
-          <li>User accounts with personalized allergen profiles</li>
+          <li>
+            Mobile app development for iOS and Android with native camera
+            integration
+          </li>
+          <li>
+            User accounts with personalized allergen profiles and preferences
+          </li>
           <li>Community ratings and reviews for products</li>
-          <li>Integration with fitness tracking apps</li>
-          <li>Nutritional value analysis alongside ingredient safety</li>
+          <li>
+            Real-time barcode scanning using device camera (instead of manual
+            input)
+          </li>
+          <li>Comparison feature for side-by-side product analysis</li>
           <li>Multi-language support for global accessibility</li>
-          <li>Barcode scanner using device camera</li>
-          <li>Comparison feature for similar products</li>
+          <li>Offline AI models for complete offline functionality</li>
+        </ul>
+
+        <h3>Diet Planner Enhancements</h3>
+        <ul>
+          <li>Cloud sync with user accounts for cross-device access</li>
+          <li>Recipe builder with ingredient-level nutrition tracking</li>
+          <li>
+            Integration with fitness tracking apps (Apple Health, Google Fit)
+          </li>
+          <li>Meal recommendations based on nutritional goals</li>
+          <li>Restaurant menu nutrition estimation</li>
+          <li>Food photo recognition with automatic logging</li>
+          <li>
+            Social features: Share meal plans with friends or nutritionists
+          </li>
+          <li>
+            Advanced analytics: Monthly trends, nutrient deficiency alerts
+          </li>
+          <li>Custom nutrition goals: Keto, low-carb, high-protein presets</li>
+        </ul>
+      </section>
+
+      <!-- ERROR HANDLING -->
+      <section class="container">
+        <h2>Error Handling & User Feedback</h2>
+        <p>
+          AroGuard implements comprehensive error handling with friendly user
+          messages:
+        </p>
+        <ul>
+          <li>
+            <strong>Invalid API keys:</strong> Real-time validation with clear
+            error messages
+          </li>
+          <li>
+            <strong>No product found:</strong> "No products found" message with
+            search suggestions
+          </li>
+          <li>
+            <strong>Scraping failed:</strong> Graceful fallback with alternative
+            data sources
+          </li>
+          <li>
+            <strong>Perplexity credits exhausted:</strong> Automatic switch to
+            Groq with notification
+          </li>
+          <li>
+            <strong>Network failures:</strong> Offline mode with cached data
+          </li>
+          <li>
+            <strong>General errors:</strong> User-friendly error messages
+            without technical jargon
+          </li>
+          <li>
+            <strong>API rate limits:</strong> Throttling and retry logic with
+            user notifications
+          </li>
         </ul>
       </section>
 
@@ -800,8 +1615,9 @@
       <div class="links-section">
         <h2 style="border: none; margin-bottom: 20px">Links & Resources</h2>
         <a href="https://github.com/Illusory-Warden/AroGuard" target="_blank"
-          >Project GitHub Repository</a
+          >View GitHub Repository</a
         >
+        <a href="https://aroguard.vercel.app" target="_blank">Live Demo</a>
         <a href="https://github.com/Illusory-Warden" target="_blank"
           >GitHub Profile</a
         >
