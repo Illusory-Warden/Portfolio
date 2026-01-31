@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -52,7 +52,9 @@
         padding-top: 60px;
         background: var(--bg-primary);
         color: var(--text-primary);
-        transition: background-color 0.3s ease, color 0.3s ease;
+        transition:
+          background-color 0.3s ease,
+          color 0.3s ease;
       }
 
       /* NAVIGATION BAR */
@@ -68,7 +70,9 @@
         justify-content: space-between;
         align-items: center;
         z-index: 1000;
-        transition: background-color 0.3s ease, border-color 0.3s ease;
+        transition:
+          background-color 0.3s ease,
+          border-color 0.3s ease;
         box-shadow: 0 2px 4px var(--shadow-color);
       }
 
@@ -117,8 +121,11 @@
         background: var(--bg-primary);
         opacity: 0;
         transform: translateY(20px);
-        transition: opacity 0.6s ease, transform 0.6s ease,
-          background-color 0.3s ease, border-color 0.3s ease,
+        transition:
+          opacity 0.6s ease,
+          transform 0.6s ease,
+          background-color 0.3s ease,
+          border-color 0.3s ease,
           box-shadow 0.3s ease;
         box-shadow: 0 2px 4px var(--shadow-color);
       }
@@ -500,6 +507,41 @@
         <h2>Projects</h2>
 
         <div class="subsection">
+          <strong
+            ><a href="project-intelliread.html"
+              >IntelliRead – PDF Intelligence Platform</a
+            ></strong
+          ><br />
+          <em
+            >React, TypeScript, PDF.js, IndexedDB, Groq AI, Google Gemini | Jan
+            2025</em
+          >
+          <ul>
+            <li>
+              Developed local-first, browser-only PDF intelligence platform as
+              part of Intel Unnati Industrial Training, transforming enterprise
+              PDFs into searchable structured knowledge using AI-powered
+              analysis
+            </li>
+            <li>
+              Built 100% client-side processing with IndexedDB storage requiring
+              zero backend infrastructure, ensuring complete data privacy with
+              local-only storage
+            </li>
+            <li>
+              Implemented intelligent document processing supporting text PDFs,
+              scanned documents, and image-heavy files with smart chunking
+              algorithm preserving document structure
+            </li>
+            <li>
+              Integrated four AI providers (Groq, Google Gemini, Perplexity,
+              Anthropic Claude) for semantic search and natural language Q&A
+              with cited page references
+            </li>
+          </ul>
+        </div>
+
+        <div class="subsection">
           <strong><a href="project-pivate-cloud.html">Pi-Vate Cloud</a></strong
           ><br />
           <em
@@ -752,7 +794,7 @@
 
       <!-- FOOTER -->
       <footer class="container">
-        <p>&copy; 2024 Rushi Daulatkar. All rights reserved.</p>
+        <p>&copy; 2026 Rushi Daulatkar. All rights reserved.</p>
 
         <!-- PHILOSOPHY STATEMENT -->
         <div class="philosophy">
